@@ -1,0 +1,236 @@
+# coding: utf-8
+# ----------------- 注 意 -------------------
+# 1. 收集的屏蔽词绝大部分来自于歌词，仅有少部分是自己找的。
+#    部分涉党政黄赌毒的屏蔽词没列出来，因为同传和歌词一般都不出现。
+# 2. 这里只列出简体字，对应的繁体字同样会被屏蔽。
+# 3. B站屏蔽词是在变化的，例如"改变", "签约", "光" 有段时间曾经是屏蔽字，
+#    现在不是了，但以后仍可能再次被屏蔽。
+# 4. 如果发送了包含全局屏蔽字的弹幕，那么api返回的msg一般为f或fire，
+#    如果发送了包含房间屏蔽字的弹幕，那么api返回的msg一般为k。
+# 5. 本代码与我的歌词工具实际应用的代码会有所不同，后者大概更复杂一点。
+# 6. 代码不规范/冗余/处理方法差，望见谅。
+# BY: LKCocoa
+import re
+
+# 拼音对应的常用汉字
+hz_xi="夕兮吸汐西希析昔茜奚唏栖息悉惜淅犀晰腊锡皙溪嘻嬉窸稀蹊蟋曦习席袭洗喜戏系细隙c"
+hz_jin_jing="巾今斤金矜津筋禁仅尽紧谨锦劲进近浸烬晋京径经荆惊晶睛鲸井景净竞竟靓敬静境镜颈"
+hz_pin_ping="拼贫频品聘乒平评凭坪屏瓶苹萍"
+hz_ba="八巴吧疤笆拔跋把靶伯坝爸罢8⑧"
+hz_jiu="纠究啾揪九久韭酒旧疚救就舅鹫9⑨"
+
+# 部分英文字母的处理规则字典（一般替换为希腊字母或全角字母）
+letter={
+    "a":"α", "A":"Α",
+    "k":"κ", "K":"Κ",
+    "l":"ｌ", "L":"Ｌ",
+    "o":"ο", "O":"Ｏ",
+    "t":"τ", "T":"Т",
+    "x":"χ", "X":"Χ",
+}
+
+# 反屏蔽处理规则字典，键为正则匹配表达式（字符串, pat），值为处理结果（字符串或函数, rep）
+rules = {
+    ### 单字
+    "翠": "Cui",
+    "尻": "Kao",
+    "爬": "Pa",
+    "痒": "Yang",
+    "岿": "巍",
+    "屌": "吊",
+    "蛤": "Ha",
+    ### 特殊字符
+    "×": "x",
+    "[àáâãäåÀÁÂÃÄÅāáǎà]": "a",
+    "[èéêëÈÉÊËēéěèê]": "e",
+    "[ìíîïÌÍÎÏīíǐì]": "i",
+    "[óõôöøÒÓÔÕÖōóǒò]": "o",
+    "[ùúûüÙÚÛÜūúǔù]": "u",
+    "[ǖǘǚǜü]": "v",
+    "⑤": "(5)",
+    "⑥": "(6)",
+    "⑧": "(8)",
+    "⑨": "(9)",
+    "⑩": "(10)",
+    "０": "0",
+    "５": "5",
+    "６": "6",
+    "９": "9",
+    ### 英文非常规处理规则
+    r"(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
+    r"(?i)(t)( ?w| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
+    r"(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l)": lambda x: letter[x.group(1)] + x.group(2),
+    # r"(?i)(a)( ?v)": lambda x: letter[x.group(1)] + x.group(2), #已失效
+    r"(?i)(a)(.*?s)(.*?m)(.*?r)": lambda x:
+        (letter[x.group(1)] + x.group()[1:])
+        if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
+    r"(?i)(l ?u? ?)(o)( ?l ?i)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
+    r"(?i)(l)( ?s ?p)": lambda x: letter[x.group(1)] + x.group(2),
+    r"(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
+    r"(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
+    r"(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
+    r"(?i)[.,。，·]+ ?(c.?n|c.?o.?m)": lambda x: " "+x.group(1),
+    r"(?i)fuck": "f**k",
+    r"(?i)bitch": "b**ch",
+    r"(?i)revolution": "revοlution",
+    r"(?i)signal": "signa1",
+    r"(?i)hentai": "变态",
+    r"(?i)youtube": "Yοutube",
+    r"(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
+        (x.group(1)+letter[x.group(2)]+x.group(3)+x.group(4))
+        if measure(x.group(1),7) and measure(x.group(3),7) and measure(x.group(4),7) else x.group(),
+    r"(?i)(s.*?)(e.*?)(x)": lambda x:
+        (x.group(1)+x.group(2)+letter[x.group(3)])
+        if measure(x.group(1),3) and measure(x.group(2),3) else x.group(),
+    r"(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
+        ("".join(x.groups()[:4]) + letter[x.group(5)] + x.group(6))
+        if measure(x.group(1),4) and measure(x.group(2),4) and measure(x.group(3),4)
+        and measure(x.group(4),4) and measure(x.group(6),4) else x.group(),
+    r"(?i)(t)(.*?m)(.*?m)(.*?s)(.*?m)(.*?e)": lambda x:
+        (letter[x.group(1)]+"".join(x.groups()[1:]))
+        if measure(x.group(2),6) and measure(x.group(3),6) and measure(x.group(4),6)
+        and measure(x.group(5),6) and measure(x.group(6),6) else x.group(),
+    ### 中文非常规处理规则
+    r"(年|月|天|小时|分) ?(前)": lambda x: x.group(1)+"`"+x.group(2),
+    r"([草操日])\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"`"+x.group(2),
+    r"想死(?!你)": "想`死",
+    r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
+    r"[贝呗](.*?毒)": lambda x: "*" + x.group(1),
+    r"(?i)([赌度读独毒肚堵ail].*?)(就.*?)(来.*)": lambda x:
+        (x.group(1)+fill(x.group(2),5)+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5) and not measure(x.group(3),4) else x.group(),
+    r"(?i)([ail].*?)(上.*?)(车.*)": lambda x:
+        (x.group(1)+fill(x.group(2),6)+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),6) and not measure(x.group(3),4) else x.group(),
+    ### 保护型处理规则
+    r"啪":"啪``",
+    r"许 ?愿":"许`愿",  # 不稳定的屏蔽词，会不会被吞得看脸
+}
+
+# 屏蔽词列表
+words =  [ 
+    ### 一般屏蔽词（易变动，有时间可以分一下类）
+    "中央", "即位", "修正", "领导", "红通", "腐败", "起义", "杀死", "囚禁", "施虐", "虐待", 
+    "捆绑", "色戒", "抖m" , "皇帝", "磕头", "万岁", "番号", "黑手", "匕首", "集会", "肥猪", 
+    "下贱", "死吧", "你妈", "死妈", "去死", "月半", "湿了", "射了", "硬了", "中出", "高潮", 
+    "调教", "被透", "喘气", "喘息", "萝莉", "处女", "处男", "绅士", "呻吟", "台湾", "香港", 
+    "日吹", "精美", "精日", "即为", "h漫" , "试看", "豪迈", "油管", "赌博", "耳语", "迷途", 
+    "割腕", "欧派", "罩杯", "大胸", "安乐", "诱惑", "胖次", "无码", "传教", "宗教", "颠覆", 
+    "扑克", "还愿", "包养", "彩票", "弯弯", "触摸", "性癖", "特权", "警察", "军队", "政府",
+    "动森", "与正", "在任", "抗争", "光荣", "革命", "己吧", "冷战", "圣战", "走光", "小熊", 
+    "发票", "吼哇", "爸爸", "嘿咻", "汪洋", "包子", "孢子", "提案",
+    "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "死ね", 
+    "hw", "gc", "zf", "kui", "knee", "kuma", "ilibilib", "pilipili", "dilidili", "535", "881", "1953",
+    "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "你触摸", "纪念日", "为自由", "莉莉安", "李医生", "毕业歌",
+    "自由之门", "继续前进", "并肩同行", "焕然一新", "奥斯曼人",
+    "身经百战", "黑框眼镜", "活不下去", "飘飘欲仙", "风平浪静", "动物之森",
+    ### 化学相关，应该还有一堆，不过一般不会出现
+    "二氧化碳", "硫酸", "甲烷", "煤气", #等等
+    ### 以下词汇屏蔽已失效，但建议处理
+    # "神社", "垃圾", "人妻", "小学生", "老不死的", "av", "sb",
+    ### 以下词汇屏蔽已失效，且不建议处理
+    # "改变", "签约", "失望", "控制", "节奏", "不习惯", "赤裸",
+    ### 以下词汇屏蔽已失效，视情况处理
+    # "天城", "虾膜", "成人",
+
+    ### 字符间隔相关
+    "[贫小平]#1乳", "[傻沙煞撒]#1[逼比笔]", "[草操]#3b", "被#3[草曹操]", "少女#3[下自]", "[做作坐座]#3爱", "[看好]#4胸",
+    "巨#2乳", "去#3搜", "车#4震", "小#4平", "再#4任", "明#4泽", "援#4交", "后#4入", "留#5水", "一个人#6寂寞",
+    "v#4b#3o", "道#3上#3飞", "名#3字#3看", "大#4一#4在", "文#6古#6花", "看#6地#6方", "清#6透#6世#6界",
+    ### 拼音组合相关
+    "[%s]#2[%s]"%(hz_xi,hz_pin_ping),
+    "[%s]#3[%s]"%(hz_ba,hz_jiu),
+    "[%s]#3[%s呼]"%(hz_xi,hz_jin_jing),
+    "[%s]#3[%s呼乎p]"%(hz_jin_jing,hz_pin_ping),
+    "[锡皙溪嘻嬉窸蹊蟋稀曦习席袭洗喜戏系细隙]#2p",
+    ### liu/lu+shi/si/舍捨 这部分精确处理比较麻烦，仅做粗略处理，错漏可能比较多
+    "六#1似", "柳#1丝", "流#4世", "[六6⑥]#4[四4④]", 
+    "[六流榴碌6⑥]#3[四思司肆撕嘶4④舍捨]",
+    "[六溜浏瘤榴硫遛6⑥]#3[什十市士识视石史施诗试适氏释侍拾饰誓恃嗜噬虱螫弑舍捨]",
+    "[璐戮路鲁露鹿卤鹭]#3[式识示失诗室适释饰矢狮拭峙柿虱螫舍捨]",
+    "[噜撸卢庐绿陆]#3[识诗适释饰虱螫舍捨]",
+    # "[璐戮卤]#2[使势逝匙仕硕四死思斯似司丝私寺厮伺撕嘶嗣祀饲4④舍捨]",
+    # "[鲁鹿鹭]#3[逝硕舍捨]",
+    # 还有比较特殊的 陆+si… 等等，暂时没精力去测了
+]
+
+def get_len(string):
+    # 获取字符串string的长度
+    # 在len()的基础上，[]及其中的内容统一视为一个字符。
+    return len(re.sub(r"\[.+?\]","~",string))
+
+def measure(string,length):
+    # 判断字符串string中非空格字符数是否小于length
+    return get_len(string)-string.count(" ")<length
+
+def fill(string,length):
+    # 填补字符串string，使其中的非空格字符数等于length
+    dots="`"*(length-get_len(string)+string.count(" "))
+    return string+dots
+
+def substitute(pat,rep,string):
+    # 正则替换函数（仅基于本代码的逻辑对re.sub()进行改进）
+    # 目前有个缺点，如果屏蔽字首尾部分相同，则可能无法替换干净。例如对"ABABA"按"ABA"→"ACA"的替换规则，
+    # 替换结果为"ACABA"而非"ACACA"。目前B站这类屏蔽字比较少，如535，爸爸，啪啪 等。
+    def get_min_so(so):
+        # 递归函数，获取串总长最短的捕获组
+        new_so=re.search(pat,so.group()[1:])
+        return so if new_so is None else get_min_so(new_so)  
+    def min_sub(so):
+        # 回调函数，获取替换结果
+        min_so=get_min_so(so)
+        min_rep=rep if isinstance(rep,str) else rep(min_so)
+        return so.group().replace(min_so.group(),min_rep)
+    return re.sub(pat,min_sub,string)
+
+def generate_rule(word):
+    # 根据屏蔽词word，生成相应的处理规则
+    # word中，“#”后的数字表示需要间隔多少个字符才不会被屏蔽
+    # 如果word不含“#”，则默认在第一个字符后添加“`”
+    try:
+        groups=re.split(r"#[1-9]",word)
+        n=len(groups)-1
+        if n==0:
+            pat = "(?i)" + " ?".join(word)
+            rep = word[0] + "`" + word[1:]
+            rules[pat] = rep
+            return
+        fills=[int(i) for i in re.findall(r"#([1-9])",word)]
+        pat="(?i)" + "".join(["("+groups[i]+".*?)" for i in range(n)]) + "(%s)"%groups[n]
+        rep="lambda x: (" + "+".join(["fill(x.group(1),%d)"%(get_len(groups[0])+int(fills[0]))] +
+            ["x.group(%d)"%(i+1) for i in range(1,n+1)]) + ") if " + \
+            " and ".join(["measure(x.group(%d),%d)"%(i+1,get_len(groups[i])+int(fills[i])) for i in range(n)]) + \
+            " else x.group()"
+        rules[pat] = eval(rep)
+    except Exception as e:
+        #print("[generate fail]%s\n%s"%(word,str(e)))
+        pass
+
+# 对屏蔽词做处理，并添加到处理规则中
+for word in words:
+    generate_rule(word)
+
+def deal(string):
+    # 对字符串string进行反屏蔽处理
+    # 外部请调用这个函数
+    string=re.sub(r" +"," ",string) # 合并连续半角空格
+    for k, v in rules.items():
+        string = substitute(k, v, string)
+    return string
+
+def test(string):
+    # 打印字符串string的反屏蔽处理效果
+    print("[处理前]",string)
+    print("[处理后]",deal(string))
+    
+if __name__ == '__main__':
+    test("asmr")
+    test("花瓣纷扬 我们连呼吸也不禁遗忘")
+    test("colorful and free")
+    test("Oh baby, can't you see?")
+    test("【Melt 马上就要到车站了】")
+    test("picopico 东京")
+    test("bilibili bilili")             #这句处理效果不好，有待改进
+    while True:
+        string=input("[处理前] ")
+        print("[处理后] "+deal(string))
