@@ -7,4 +7,4 @@
 使用方法示例：
 from BiliLiveShieldWords import deal # [as 别名] 导入处理函数
 print(deal("初心"))
-# 结果：初`心
+#结果：初`心
