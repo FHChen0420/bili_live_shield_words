@@ -4,9 +4,9 @@
 
 注意：B站屏蔽字是在不断变化的，本代码也会随缘更新
 
-代码示例：
+代码使用示例：
 
-from BiliLiveShieldWords import deal # [as 别名] 导入处理函数
+from BiliLiveShieldWords import deal # [as 别名]  # 导入处理函数
 
 print(deal("初心 asmr"))
 
