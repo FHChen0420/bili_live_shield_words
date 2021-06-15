@@ -25,6 +25,7 @@ words =  [
     "即位", "修正", "领导", "红通", "腐败", "起义", "特权", "警察", "军队", "政府",
     "与正", "在任", "抗争", "革命", "冷战", "小熊", "汪洋", "包子", "孢子", "提案",
     "颠覆", "圣战", "番号", "吼哇", "卫兵", "国歌", "和谐", "河蟹", "八路", "家明",
+    "游行",
     "杀死", "囚禁", "施虐", "虐待", "捆绑", "割腕", "匕首", 
     "色戒", "湿了", "射了", "硬了", "中出", "高潮", "调教", "被透", "走光", "诱惑",
     "喘气", "喘息", "呻吟", "处女", "处男", "绅士", "抖m" , "h漫" , "性癖", "无码",
@@ -127,8 +128,9 @@ rules = {
     r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     r"[贝呗](.*?毒)": lambda x: "*" + x.group(1),
     r"(?i)([赌度读独毒肚堵ail].*?)([就上去].*?)([来射车].*)": lambda x:
-        (x.group(1)+fill(x.group(2),5)+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5) and not measure(x.group(3),4) else x.group(),
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去")+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去")
+        and not measure(x.group(3),4) else x.group(),
     ### 保护型处理规则
     r"啪":"啪``",
     r"许 ?愿":"许`愿",  # 不稳定的屏蔽词，会不会被吞得看脸
@@ -147,7 +149,13 @@ def measure(string,length):
 def fill(string,length):
     # 填补字符串string，使其中的非空格字符数等于length
     dots="`"*(length-get_len(string)+string.count(" "))
-    return string+dots
+    return string.rstrip()+dots
+
+def r_pos(string,targets):
+    # 查找字符串targets中的字符在字符串string中最后一次出现的位置
+    r_str=string.replace(" ","")[::-1]
+    for index,char in enumerate(r_str):
+        if char in targets: return len(r_str)-index-1
 
 def substitute(pat,rep,string):
     # 正则替换函数（仅基于本代码的逻辑对re.sub()进行改进）
@@ -184,7 +192,6 @@ def generate_rule(word):
             " else x.group()"
         rules[pat] = eval(rep)
     except Exception as e:
-        #print("[generate fail]%s\n%s"%(word,str(e)))
         pass
 
 # 对屏蔽词做处理，并添加到处理规则中
