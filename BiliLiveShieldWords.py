@@ -128,8 +128,8 @@ rules = {
     r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     r"[贝呗](.*?毒)": lambda x: "*" + x.group(1),
     r"(?i)([赌度读独毒肚堵ail].*?)([就上去].*?)([来射车].*)": lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去")+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去")
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去"))+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去"))
         and not measure(x.group(3),4) else x.group(),
     ### 保护型处理规则
     r"啪":"啪``",
