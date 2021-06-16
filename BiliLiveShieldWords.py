@@ -60,7 +60,7 @@ words =  [
     "[贫小平]#1乳", "[傻沙煞撒]#1[逼比笔]", "[草操]#3b", "被#3[草曹操]", "少女#3[下自]", "[做作坐座]#3爱", "[看好]#4胸",
     "巨#2乳", "去#3搜", "车#4震", "小#4平", "再#4任", "明#4泽", "援#4交", "后#4入", "留#5水", 
     "v#4b#3o", "道#3上#3飞", "名#3字#3看", "我#3是#3处", "射#4身#4上", "大#4一#4在", "文#6古#6花", "看#6地#6方", 
-    "清#6透#6世#6界", "一#6个#6人#6寂#6寞",
+    "清#6透#6世#6界", "一#6个#6人#6寂#6寞", "[.。·]#1[cf]", "点#1[1cfl]",
     ### 拼音组合相关
     "[%s]#2[%s]"%(hz_xi,hz_pin_ping),
     "[%s]#3[%s]"%(hz_ba,hz_jiu),
@@ -97,7 +97,7 @@ rules = {
     r"(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
     r"(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
     r"(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
-    r"(?i)[.,。，·]+ ?(c.?n|c.?o.?m)": lambda x: " "+x.group(1),
+    r"(?i)([.,。，· ] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "``" + x.group(2),
     r"(?i)fuck": "f**k",
     r"(?i)bitch": "b**ch",
     r"(?i)revolution": "revοlution",
@@ -128,12 +128,13 @@ rules = {
     r"想死(?!你)": "想`死",
     r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     r"[贝呗](.*?毒)": lambda x: "*" + x.group(1),
-    r"(?i)([赌度读独毒肚堵ail].*?)([就上去还].*?)([来射车有点].*)": lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还"))+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还"))
+    r"(点 ?){3,}": "点点…",
+    r"(?i)([赌度读独毒肚堵ail].*?)([就上去还点].*?)([来射车有点].*)": lambda x:
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
         and not measure(x.group(3),4) else x.group(),
     ### 保护型处理规则
-    r"啪":"啪``",
+    r"啪":"帕",
     r"许 ?愿":"许`愿",  # 不稳定的屏蔽词，会不会被吞得看脸
 }
 # <DATA END>
