@@ -49,7 +49,7 @@ words =  [
 
     ### 以下屏蔽词已做其它处理
     # "hk", "tw", "abs", "lsp", "sex", "tam", "usl", "xjp", "anal", "arms", "asmr", 
-    # "fldf", "fuck", "loli", "sina", "bitch", "luoli", "sager", "shina",
+    # "fldf", "fuck", "loli", "sina", "baidu", "bitch", "luoli", "sager", "shina",
     # "hentai", "signal", "tmmsme", "yayeae", "youtube",  "revolution",
     # "书记", "想死", "许愿", "啪啪", "啪啪啪", "64", #其余部分见rules 
 
@@ -130,7 +130,7 @@ rules = {
     r"想死(?!你)": "想`死",
     r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     r"(点 ?){3,}": "点点…",
-    "([%s].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "D`u", # 不一定屏蔽得干净
+    "([%s].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "Ꭰ", # 这里的字符是U+13A0。本条规则不一定处理得干净
     r"(?i)([赌度读独毒肚堵ail].*?)([就上去还点].*?)([来射车有点].*)": lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
         if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
