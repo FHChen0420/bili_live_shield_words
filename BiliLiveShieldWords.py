@@ -130,7 +130,7 @@ rules = {
     r"想死(?!你)": "想`死",
     r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     r"(点 ?){3,}": "点点…",
-    "([%s].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "Ꭰ", # 这里的字符是U+13A0。本条规则不一定处理得干净
+    "([%s].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "Ꭰu", # 这里的字符Ꭰ是U+13A0。本条规则不一定处理得干净
     r"(?i)([赌度读独毒肚堵ail].*?)([就上去还点].*?)([来射车有点].*)": lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
         if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
