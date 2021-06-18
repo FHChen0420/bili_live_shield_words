@@ -87,57 +87,58 @@ rules = {
     "[àáâãäåÀÁÂÃÄÅāǎ]": "a", "[èéêëÈÉÊËēě]": "e", "[ìíîïÌÍÎÏīǐ]": "i", "[òóõôöÒÓÔÕÖōǒ]": "o", "[ùúûüÙÚÛÜūǔ]": "u", "[ǖǘǚǜü]": "v",
     "⑤": "(5)", "⑥": "(6)", "⑧": "(8)", "⑨": "(9)", "⑩": "(10)", "０": "0", "５": "5", "６": "6", "９": "9", "×": "x",
     ### 英文非常规处理规则
-    r"(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
-    r"(?i)(t)( ?w| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
-    r"(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l)": lambda x: letter[x.group(1)] + x.group(2),
-    # r"(?i)(a)( ?v)": lambda x: letter[x.group(1)] + x.group(2), #已失效
-    r"(?i)(a)(.*?s)(.*?m)(.*?r)": lambda x: #asmr四个字母任意顺序排列均会被屏蔽，这里只考虑常见情况
+    "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
+    "(?i)(t)( ?w| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
+    "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l)": lambda x: letter[x.group(1)] + x.group(2),
+    # "(?i)(a)( ?v)": lambda x: letter[x.group(1)] + x.group(2), #已失效
+    "(?i)(a)(.*?s)(.*?m)(.*?r)": lambda x: #asmr四个字母任意顺序排列均会被屏蔽，这里只考虑常见情况
         (letter[x.group(1)] + x.group()[1:])
         if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
-    r"(?i)(l ?u? ?)(o)( ?l ?i)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
-    r"(?i)(l)( ?s ?p)": lambda x: letter[x.group(1)] + x.group(2),
-    r"(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
-    r"(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
-    r"(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
-    r"(?i)([.,。，· ] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "``" + x.group(2),
-    r"(?i)fuck": "f**k",
-    r"(?i)bitch": "b**ch",
-    r"(?i)revolution": "revοlution",
-    r"(?i)signal": "signa1",
-    r"(?i)hentai": "变态",
-    r"(?i)youtube": "Yοutube",
-    r"(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
+    "(?i)(l ?u? ?)(o)( ?l ?i)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
+    "(?i)(l)( ?s ?p)": lambda x: letter[x.group(1)] + x.group(2),
+    "(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
+    "(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
+    "(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
+    "(?i)([.,。，· ] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "``" + x.group(2),
+    "(?i)fuck": "f**k",
+    "(?i)bitch": "b**ch",
+    "(?i)revolution": "revοlution",
+    "(?i)signal": "signa1",
+    "(?i)hentai": "变态",
+    "(?i)youtube": "Yοutube",
+    "(?i)bai ?du": "BaiᎠu",
+    "(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
         (x.group(1)+letter[x.group(2)]+x.group(3)+x.group(4))
         if measure(x.group(1),7) and measure(x.group(3),7) and measure(x.group(4),7) else x.group(),
-    r"(?i)(s.*?)(e.*?)(x)": lambda x:
+    "(?i)(s.*?)(e.*?)(x)": lambda x:
         (x.group(1)+x.group(2)+letter[x.group(3)])
         if measure(x.group(1),3) and measure(x.group(2),3) else x.group(),
-    r"(?i)(x)(.*?j)(.*?p)": lambda x:
+    "(?i)(x)(.*?j)(.*?p)": lambda x:
         (letter[x.group(1)]+x.group(2)+x.group(3))
         if measure(x.group(2),5) and measure(x.group(3),5) else x.group(),
-    r"(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
+    "(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
         ("".join(x.groups()[:4]) + letter[x.group(5)] + x.group(6))
         if measure(x.group(1),4) and measure(x.group(2),4) and measure(x.group(3),4)
         and measure(x.group(4),4) and measure(x.group(6),4) else x.group(),
-    r"(?i)(t)(.*?m)(.*?m)(.*?s)(.*?m)(.*?e)": lambda x:
+    "(?i)(t)(.*?m)(.*?m)(.*?s)(.*?m)(.*?e)": lambda x:
         (letter[x.group(1)]+"".join(x.groups()[1:]))
         if measure(x.group(2),6) and measure(x.group(3),6) and measure(x.group(4),6)
         and measure(x.group(5),6) and measure(x.group(6),6) else x.group(),
     ### 中文非常规处理规则
-    r"(年|月|天|小时|分) ?(前)": lambda x: x.group(1)+"`"+x.group(2),
-    r"([草操日])\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"`"+x.group(2),
-    r"(习) ?(二胡|主播|直播)": lambda x: x.group(1)+"`"+x.group(2),
-    r"想死(?!你)": "想`死",
-    r"书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
-    r"(点 ?){3,}": "点点…",
+    "(年|月|天|小时|分) ?(前)": lambda x: x.group(1)+"`"+x.group(2),
+    "([草操日])\\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"`"+x.group(2),
+    "(习) ?(二胡|主播|直播)": lambda x: x.group(1)+"`"+x.group(2),
+    "想死(?!你)": "想`死",
+    "书记(?!舞)": "书`记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
+    "(点 ?){3,}": "点点…",
     "([%s].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "Ꭰu", # 这里的字符Ꭰ是U+13A0。本条规则不一定处理得干净
-    r"(?i)([赌度读独毒肚堵ail].*?)([就上去还点].*?)([来射车有点].*)": lambda x:
+    "(?i)([%sail].*?)([就上去还点].*?)([来射车有点].*)"%(hz_du): lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
         if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
         and not measure(x.group(3),4) else x.group(),
     ### 保护型处理规则
-    r"啪":"帕",
-    r"许 ?愿":"许`愿",  # 不稳定的屏蔽词，会不会被吞得看脸
+    "啪":"帕",
+    "许 ?愿":"许`愿",  # 不稳定的屏蔽词，会不会被吞得看脸
 }
 # <DATA END>
 
