@@ -153,7 +153,7 @@ def measure(string,length):
 
 def fill(string,length):
     # 填补字符串string，使其中的非空格字符数等于length
-    dots="`"*(length-get_len(string)+string.count(" "))
+    dots="\u0592"*(length-get_len(string)+string.count(" "))
     return string.rstrip()+dots
 
 def r_pos(string,targets):
