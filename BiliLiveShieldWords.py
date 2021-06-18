@@ -99,7 +99,7 @@ rules = {
     "(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
     "(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
     "(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
-    "(?i)([.,。，· ] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "``" + x.group(2),
+    "(?i)([.,。，·] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "``" + x.group(2),
     "(?i)fuck": "f**k",
     "(?i)bitch": "b**ch",
     "(?i)revolution": "revοlution",
