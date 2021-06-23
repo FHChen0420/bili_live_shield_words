@@ -108,7 +108,7 @@ rules = {
     "(?i)signal": "signa1",
     "(?i)hentai": "变态",
     "(?i)youtube": "Yοutube",
-    "(?i)bai(.*?)du": "Bai"+x.group(1)+"Ꭰu",
+    "(?i)bai(.*?)du": lambda x: "Bai"+x.group(1)+"Ꭰu",
     "(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
         (x.group(1)+letter[x.group(2)]+x.group(3)+x.group(4))
         if measure(x.group(1),7) and measure(x.group(3),7) and measure(x.group(4),7) else x.group(),
