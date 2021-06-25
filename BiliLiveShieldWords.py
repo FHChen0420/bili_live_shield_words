@@ -43,7 +43,8 @@ words =  [
     "许愿", 
     "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "死ね", "映画", "番号",
 
-    "hw", "gc", "zf", "kui", "knee", "kuma", "mama",
+    "hw", "gc", "zf", "kui", "lsp", "usl", "drug", "knee", "kuma", "loli", "mama", "sina", 
+    "luoli", "sager", "shina", "hentai", "signal", "youtube", "revolution",
     "ilibilib", "pilipili", "dilidili", "535", "881", "1953",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "就去泡", "一本道",
     "纪念日", "为自由", "莉莉安", "李医生", "右大人", "绞肉机", "不唱歌", "女菩萨", "发不出", "老鼠台",
@@ -52,9 +53,8 @@ words =  [
     "你是你我是我",
 
     ### 以下屏蔽词已做其它处理
-    # "hk", "tw", "abs", "lsp", "sex", "tam", "usl", "xjp", "anal", "arms", "asmr", 
-    # "fldf", "fuck", "loli", "sina", "baidu", "bitch", "luoli", "sager", "shina",
-    # "hentai", "signal", "tmmsme", "yayeae", "youtube",  "revolution",
+    # "hk", "tw", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", 
+    # "fldf", "fuck", "baidu", "bitch", "tmmsme", "yayeae",   
     # "书记", "想死", "许愿", "啪啪", "啪啪啪", "点点点", "64", #其余部分见rules 
 
     ### 以下词汇屏蔽已失效
@@ -87,22 +87,12 @@ rules = {
     "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
     "(?i)(t)( ?w| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
     "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l)": lambda x: letter[x.group(1)] + x.group(2),
-    # "(?i)(a)( ?v)": lambda x: letter[x.group(1)] + x.group(2), #已失效
     "(?i)(a)(.*?s)(.*?m)(.*?r)": lambda x: #asmr四个字母任意顺序排列均会被屏蔽，这里只考虑常见情况
         (letter[x.group(1)] + x.group()[1:])
         if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
-    "(?i)(l ?u? ?)(o)( ?l ?i)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
-    "(?i)(l)( ?s ?p)": lambda x: letter[x.group(1)] + x.group(2),
-    "(?i)(s ?h? ?i ?n ?)(a)": lambda x: x.group(1) + letter[x.group(2)],
-    "(?i)(u ?s ?)(l)": lambda x: x.group(1) + letter[x.group(2)],
-    "(?i)(s ?)(a)( ?g ?e ?r)": lambda x: x.group(1) + letter[x.group(2)] + x.group(3),
     "(?i)([.,。，·] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "\u0592\u0592" + x.group(2),
     "(?i)fuck": "f**k",
-    "(?i)bitch": "b**ch",
-    "(?i)revolution": "revοlution",
-    "(?i)signal": "signa1",
-    "(?i)hentai": "变态",
-    "(?i)youtube": "Yοutube",
+    "(?i)bitch": "b***h",
     "(?i)bai(.*?)du": lambda x: "Bai"+x.group(1)+"Ꭰu",
     "(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
         (x.group(1)+letter[x.group(2)]+x.group(3)+x.group(4))
