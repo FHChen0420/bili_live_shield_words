@@ -45,7 +45,7 @@ words =  [
 
     "hw", "gc", "zf", "kui", "lsp", "usl", "drug", "knee", "kuma", "loli", "mama", "sina", 
     "luoli", "sager", "shina", "hentai", "signal", "youtube", "revolution",
-    "ilibilib", "pilipili", "dilidili", "64", "535", "604", "881", "1953",
+    "ilibilib", "pilipili", "dilidili", "535", "604", "881", "1953",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "就去泡", "一本道", "被传染", "网易云",
     "纪念日", "为自由", "莉莉安", "李医生", "右大人", "绞肉机", "不唱歌", "女菩萨", "发不出", "老鼠台", "缘之空",
     "自由之门", "继续前进", "并肩同行", "焕然一新", "奥斯曼人", "二氧化碳", "阿里巴巴",
@@ -55,7 +55,7 @@ words =  [
     ### 以下屏蔽词已做其它处理
     # "hk", "tg", "tw", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", 
     # "fldf", "fuck", "baidu", "bitch", "tmmsme", "yayeae",   
-    # "书记", "想死", "许愿", "啪啪", "啪啪啪", "点点点", #其余部分见rules 
+    # "书记", "想死", "许愿", "啪啪", "啪啪啪", "点点点", "64", #其余部分见rules 
 
     ### 以下词汇屏蔽已失效
     # "神社", "垃圾", "人妻", "改变", "签约", "失望", "控制", "节奏", "赤裸", "天城",
@@ -116,12 +116,13 @@ rules = {
     ### 中文非常规处理规则
     "(年|月|天|小时|分) ?(前)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "([草操日])\\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "想死(?!你)": "想\u0592死",
-    "书记(?!舞)": "书\u0592记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
     "(点 ?){3,}": "点点…",
+    "想 ?死(?! ?你)": "想\u0592死",
+    "书 ?记(?! ?舞)": "书\u0592记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
+    "6 ?4(?! ?\\w)": "6\u05924",
+    "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
     "([干湿].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"干#7视#1频"统一处理，大概率还有其他"X+视频"的情况
-    "([%s贝].*?)[%s]"%(hz_bai,hz_du): lambda x: x.group(1) + "Ꭰu", # 这里的字符Ꭰ是U+13A0。本条规则不一定处理得干净
-    "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group()!="64" else x.group(), 
+    "(?i)([%s贝]|b ?a ?i)(.*?)([%s]|d ?u)"%(hz_bai,hz_du): lambda x: x.group(1) + x.group(2) + "Ꭰu", # 这里的字符Ꭰ是/u13A0。本条规则不一定处理得干净
     "(?i)([大一].*?)([一哥].*?)([在来])": lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"一哥"))+x.group(3))
         if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"一哥")) else x.group(),
