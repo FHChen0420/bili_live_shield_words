@@ -38,7 +38,7 @@ words =  [
     "大麻", "包粉",
     "色戒", "湿了", "射了", "硬了", "中出", "高潮", "调教", "被透", "走光", "诱惑",
     "喘气", "喘息", "呻吟", "处女", "处男", "绅士", "抖m" , "h漫" , "性癖", "无码",
-    "胖次", "欧派", "罩杯", "大胸", "嘿咻", "下女", "内内", "吹气", "掏耳",
+    "胖次", "欧派", "罩杯", "大胸", "嘿咻", "下女", "内内", "吹气", "掏耳", "助眠",
     "肥猪", "下贱", "死吧", "你妈", "死妈", "去死", "月半", "己吧", "送妈", "死法",
     "si法",
     "台湾", "香港", "日吹", "精美", "精日", "弯弯", "油管", "推特", "微博", "新浪",
@@ -132,9 +132,9 @@ rules = {
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
     "([干湿].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"干#7视#1频"统一处理，大概率还有其他"X+视频"的情况
     "(?i)([%s贝]|b ?a ?i)(.*?)([%s]|d ?u)"%(hz_bai,hz_du): lambda x: x.group(1) + x.group(2) + "Ꭰu", # 这里的字符Ꭰ是/u13A0。本条规则不一定处理得干净
-    "(?i)([大一].*?)([一哥].*?)([在来])": lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"一哥"))+x.group(3))
-        if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"一哥")) else x.group(),
+    "(?i)([大小一姐妹哥弟].*?)([一姐妹哥弟].*?)([在来做])": lambda x:
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"一姐妹哥弟"))+x.group(3))
+        if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"一姐妹哥弟")) else x.group(),
     "(?i)([%sail].*?)([就上去还点].*?)([来射车有点].*)"%(hz_du): lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
         if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
