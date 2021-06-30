@@ -133,9 +133,13 @@ rules = {
     "(点 ?点 ?)(点)": lambda x: x.group(1)+"\u0592"+x.group(2)+"\u0592",
     "想 ?死(?! ?你)": "想\u0592死",
     "书 ?记(?! ?舞)": "书\u0592记", # "藤原书记"不是屏蔽词，但是不考虑这种情况
-    "(.? ?7 ?)(3 ?.?)": lambda x: (x.group(1)+"\u0592"+x.group(2)) if re.match("(?a)^\\W? ?7 ?$",x.group(1)) and re.match("(?a)^3 ?\\W?$",x.group(2)) else x.group(),
-    "(.? ?6 ?)(4 ?.?)": lambda x: (x.group(1)+"\u0592"+x.group(2)) if re.match("(?a)^\\W? ?6 ?$",x.group(1)) and re.match("(?a)^4 ?\\W?$",x.group(2)) else x.group(),
-    "(.? ?8 ?)(9)": lambda x: (x.group(1)+"\u0592"*2+x.group(2)) if re.match("(?a)^\\W? ?8 ?$",x.group(1)) else x.group(),
+    # 临时
+    "7 ?3":"7\u05923",
+    "6 ?4":"6\u05924",
+    "8 ?9":"8\u0592\u05929",
+    #"(.? ?7 ?)(3 ?.?)": lambda x: (x.group(1)+"\u0592"+x.group(2)) if re.match("(?a)^\\W? ?7 ?$",x.group(1)) and re.match("(?a)^3 ?\\W?$",x.group(2)) else x.group(),
+    #"(.? ?6 ?)(4 ?.?)": lambda x: (x.group(1)+"\u0592"+x.group(2)) if re.match("(?a)^\\W? ?6 ?$",x.group(1)) and re.match("(?a)^4 ?\\W?$",x.group(2)) else x.group(),
+    #"(.? ?8 ?)(9)": lambda x: (x.group(1)+"\u0592"*2+x.group(2)) if re.match("(?a)^\\W? ?8 ?$",x.group(1)) else x.group(),
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
     "([干湿].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"干#7视#1频"统一处理，大概率还有其他"X+视频"的情况
     "(?i)([%s贝]|b ?a ?i)(.*?)([%s]|d ?u)"%(hz_bai,hz_du): lambda x: x.group(1) + x.group(2) + "Ꭰu", # 这里的字符Ꭰ是/u13A0。本条规则不一定处理得干净
