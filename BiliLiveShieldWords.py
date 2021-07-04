@@ -119,6 +119,10 @@ rules = {
     "(?i)(x)(.*?j)(.*?p)": lambda x:
         (letter[x.group(1)]+x.group(2)+x.group(3))
         if measure(x.group(2),5) and measure(x.group(3),5) else x.group(),
+    "(?i)(r.*?)(i.*?)(o)(.*?t)(.*?s)": lambda x:
+        (x.group(1)+x.group(2)+letter[x.group(3)]+x.group(4)+x.group(5))
+        if measure(x.group(1),7) and measure(x.group(2),7) and measure(x.group(4),7)
+        and measure(x.group(5),7) else x.group(),
     "(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
         ("".join(x.groups()[:4]) + letter[x.group(5)] + x.group(6))
         if measure(x.group(1),4) and measure(x.group(2),4) and measure(x.group(3),4)
