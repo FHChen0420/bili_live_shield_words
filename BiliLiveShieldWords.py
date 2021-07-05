@@ -145,8 +145,8 @@ rules = {
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"一小姐妹哥弟"))+x.group(3))
         if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"一小姐妹哥弟")) else x.group(),
     "(?i)([%sail].*?)([就上去还点被].*?)([来射车有点].*)"%(hz_du): lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点"))+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点"))
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点被"))+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点被"))
         and not measure(x.group(3),4) else x.group(),
     # 下列三条规则已被简化
     #"(.? ?7 ?)(3 ?.?)": lambda x: (x.group(1)+"\u0592"+x.group(2)) if re.match("(?a)^\\W? ?7 ?$",x.group(1)) and re.match("(?a)^3 ?\\W?$",x.group(2)) else x.group(),
