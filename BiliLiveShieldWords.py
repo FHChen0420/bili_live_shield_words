@@ -143,9 +143,9 @@ rules = {
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
     "([干湿].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"干#7视#1频"统一处理，大概率还有其他"X+视频"的情况
     "(?i)([%s贝]|b ?a ?i)(.*?)([%s]|d ?u)"%(hz_bai,hz_du): lambda x: x.group(1) + x.group(2) + "Ꭰu", # 这里的字符Ꭰ是/u13A0。本条规则不一定处理得干净
-    "(?i)([大小一姐妹哥弟].*?)([一小姐妹哥弟].*?)([在来做])": lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"一小姐妹哥弟"))+x.group(3))
-        if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"一小姐妹哥弟")) else x.group(),
+    "(?i)([大小姐妹哥弟一二三四五六七八九].*?)([小姐妹哥弟一二三四五六七八九].*?)([在来做])": lambda x:
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九"))+x.group(3))
+        if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九")) else x.group(),
     "(?i)([%sail].*?)([就上去还点被].*?)([来射车有点].*)"%(hz_du): lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点被"))+x.group(3))
         if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点被"))
