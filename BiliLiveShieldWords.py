@@ -123,7 +123,6 @@ rules = {
     "(?i)([.,。，·] ?)(c.?n|c.?o.?m)": lambda x: x.group(1) + "\u0592\u0592" + x.group(2),
     "(?i)fuck": "f**k",
     "(?i)bitch": "b***h",
-    "(?i)bai(.*?)du": lambda x: "Bai"+x.group(1)+"Ꭰu",
     "(?i)(a)(.*?j)(.*?p)": lambda x:
         (letter[x.group(1)] + x.group()[1:])
         if measure(x.group(2),7) and measure(x.group(3),7) else x.group(),
@@ -160,6 +159,7 @@ rules = {
     "爸.*?(?=爸)": lambda x: fill(x.group(),2),
     "啪.*?(?=啪)": lambda x: fill(x.group(),2),
     "啪.*?(?=啪 ?[^ ]? ?啪)": lambda x: fill(x.group(),3),
+    "鸡.*?(?=鸡)": lambda x: fill(x.group(),3),
     "光.*?(?=光)": lambda x: fill(x.group(),4),
     "共.*?(?=共)": lambda x: fill(x.group(),5),
     "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+"\u0592"+x.group(2),
@@ -173,8 +173,8 @@ rules = {
     "(?a)(?<!\\w)(8)( ?9)": lambda x: "８"+x.group(2),
     "(?a)(?<!\\w)(4 ?0 ?)(4)(?!\\w)": lambda x: x.group(1)+"４",
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
+    "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
     "([干湿日草操].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"[干日草操]#7视#1频"统一处理，大概率还有其他"X+视频"的情况
-    "(?i)([%s贝]|b ?a ?i)(.*?)([%s]|d ?u)"%(hz_bai,hz_du): lambda x: x.group(1) + x.group(2) + "Ꭰu", # 这里的字符Ꭰ是U+13A0。本条规则不一定处理得干净
     "([大小姐妹哥弟一二三四五六七八九].*?)([小姐妹哥弟一二三四五六七八九].*?)([在来做进])": lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九"))+x.group(3))
         if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九")) else x.group(),
@@ -271,7 +271,7 @@ if __name__ == '__main__':
     test("Oh baby, can't you see?")
     test("【Melt 马上就要到车站了】")
     test("picopico 东京")
-    test("bilibili bilili")             #这句处理效果不好，有待改进
+    test("bilibili bilili")
     while True:
         string=input("[处理前] ")
         print("[处理后] "+deal(string))
