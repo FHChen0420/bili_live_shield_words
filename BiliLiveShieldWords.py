@@ -79,7 +79,7 @@ words =  [
     "玩#1[逼奶]", "吉#1[尔儿]", "乳#1[头首量]", "称#1[王皇帝]", "涩#1[气批片p]", "大#1[吊弔麻胸]", "点#1[人1cfl]", "死#1[吧妈法了ね]", "色#1[图情皮批逼戒b]", 
     "[逼b]#1里", "[批阴]#1毛", "[左右]#1倾", "[杀去爽]#1死", "[处下熟]#1女", "[贫小平]#1乳", "[调传宗]#1教", "[鸡己性]#1吧", "[湿射硬没]#1了", "[条包孢窑梯]#1子",
     "[插吸]#1[你他她它]", "[.。·]#1[cf]", "[傻沙煞撒]#1[逼比笔]",  
-    "巨#2乳", "自#2尽", "涩#2情", "[逼b]#2毛",
+    "巨#2乳", "自#2尽", "涩#2情", "[逼b]#2毛", "湿#2视#2频",
     "支#3那", "去#3搜", "百#3d", "自#3杀", "共#3产", "毛#3东", "手#3银", "涩#3图", 
     "[涩色]#3网", "被#3[日草操]", "[习習吊弔]#3大", "[草操]#3b", "[下压]#3注", "[黄色h]#3片", "[做作坐座]#3爱", 
     "六#4四", "八#4九", "车#4震", "小#4平", "再#4任", "明#4泽", "援#4交", "后#4入", "天#4门", "流#4世", "主#4席", "黄#4网", "[看好]#4胸", "[日草操干]#4[姐妹奶]", 
@@ -158,13 +158,13 @@ rules = {
     "([草操日])\\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(点 ?){2}(?=点)": lambda x: x.group()+"\u0592",
     "(大 ?){4}(?=大)": lambda x: x.group()+"\u0592",
-    "([啪爸弯湾]).*?(?=\\1)": lambda x:fill(x.group(),2),
+    "([啪爸弯湾] ?)(?=\\1)": lambda x: x.group(1) + "\u0592",
     "鸡.*?(?=鸡)": lambda x: fill(x.group(),3),
     "光.*?(?=光)": lambda x: fill(x.group(),4),
     "共.*?(?=共)": lambda x: fill(x.group(),5),
     "啪.*?(?=啪 ?[^ ]? ?啪)": lambda x: fill(x.group(),3),
     "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+"\u0592"+x.group(2), # "藤原书记"不是屏蔽词，但是不考虑这种情况
+    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+"\u0592"+x.group(2), # "藤原书记"不是屏蔽词
     "(屏 ?)(蔽)(?! ?词)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
@@ -175,7 +175,7 @@ rules = {
     "(?a)(?<!\\w)(4 ?0 ?)(4)(?! ?\\w)": lambda x: x.group(1)+"４",
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
     "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
-    "([干湿日草操].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),3)+x.group(3), # "湿#2视#2频"与"[干日草操]#7视#1频"统一处理，大概率还有其他"X+视频"的情况
+    "([干日草操].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "[干日草操]#7视#1频"
     "([大小妈姐妹哥弟一二三四五六七八九].*?)([小姐妹哥弟一二三四五六七八九].*?)([在来做进])": lambda x:
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九"))+x.group(3))
         if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九")) else x.group(),
@@ -195,44 +195,43 @@ rules = {
 # <DATA END>
 
 def get_len(string):
-    # 获取字符串string的长度
-    # 在len()的基础上，[]及其中的内容统一视为一个字符。
+    '''获取正则表达式串string的字段宽度'''
     return len(re.sub(r"\[.+?\]","~",string))
 
 def measure(string,length):
-    # 判断字符串string中非空格字符数是否小于length
+    '''判断字符串string中非空格字符数是否小于length'''
     return get_len(string)-string.count(" ")<length
 
 def fill(string,length):
-    # 填补字符串string，使其中的非空格字符数等于length
+    '''填补字符串string，使其中的非空格字符数等于length'''
     dots="\u0592"*(length-get_len(string)+string.count(" "))
     return string+dots
 
 def r_pos(string,targets):
-    # 查找字符串targets中的字符在字符串string中最后一次出现的位置
+    '''查找字符串targets中的字符在字符串string中最后一次出现的位置'''
     r_str=string.replace(" ","")[::-1]
     for index,char in enumerate(r_str):
         if char in targets: return len(r_str)-index-1
 
 def substitute(pat,rep,string):
-    # 正则替换函数（仅基于本代码的逻辑对re.sub()进行改进）
-    # 目前有个缺点，如果屏蔽字首尾部分相同，则可能无法替换干净。例如对"ABABA"按"ABA"→"ACA"的替换规则，
-    # 替换结果为"ACABA"而非"ACACA"。目前B站这类屏蔽字比较少，如535，爸爸，啪啪 等。
+    '''正则替换函数，是re.sub()的一种修改版本'''
+    # 目前有个缺点，如果屏蔽字首尾相同或可拆分为更小的重复单元，则可能无法替换干净。
+    # 例如对"ABABA"按"ABA"→"ACA"的替换规则，替换结果为"ACABA"而非"ACACA"。
     def get_min_so(so):
-        # 递归函数，获取串总长最短的捕获组
+        '''递归函数，获取串总长最短的捕获组'''
         new_so=re.search(pat,so.group()[1:])
         return so if new_so is None else get_min_so(new_so)  
     def min_sub(so):
-        # 回调函数，获取替换结果
+        '''回调函数，获取替换结果'''
         min_so=get_min_so(so)
-        min_rep=rep if isinstance(rep,str) else rep(min_so)
+        min_rep=re.sub(r"\\(\d)",lambda x:min_so.group(int(x.group(1))),rep) if isinstance(rep,str) else rep(min_so)
         return so.group().replace(min_so.group(),min_rep)
     return re.sub(pat,min_sub,string)
 
 def generate_rule(word):
-    # 根据屏蔽词word，生成相应的处理规则
-    # word中，“#”后的数字表示需要间隔多少个字符才不会被屏蔽
-    # 如果word不含“#”，则默认在第一个字符后添加“\u0592”(看起来像小的∴)
+    '''根据屏蔽词word，生成相应的处理规则，添加到字典rules中'''
+    # word中，“#”后的数字表示需要间隔多少个字符才不会被屏蔽。
+    # 如果word不含“#”，则默认在第一个字符后添加“\u0592”。
     try:
         groups=re.split(r"#[1-9]",word)
         n=len(groups)-1
@@ -256,15 +255,15 @@ for word in words:
     generate_rule(word)
 
 def deal(string):
-    # 对字符串string进行反屏蔽处理
-    # 外部请调用这个函数
+    '''对字符串string按字典rules中的规则进行反屏蔽处理'''
+    # 外部请调用这个函数。
     string=re.sub(r" +"," ",string) # 合并连续半角空格
     for k, v in rules.items():
         string = substitute(k, v, string)
     return string
 
 def test(string):
-    # 打印字符串string的反屏蔽处理效果
+    '''打印字符串string的反屏蔽处理结果'''
     print("[处理前]",string)
     print("[处理后]",deal(string))
     
