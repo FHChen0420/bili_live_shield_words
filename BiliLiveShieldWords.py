@@ -101,7 +101,7 @@ words =  [
     
     ### 以下屏蔽词已做其它处理（见rules）
     # "hk", "tg", "tw", "xi", "zf", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", 
-    # "fldf", "mama", "mimi", "baidu", "tmmsme", "yayeae", "ilibilib", "pilipili", "dilidili", 
+    # "fldf", "mama", "mimi", "baidu", "tmmsme", "yayeae", "ilibilib", "pilipili", "dilidili", "niconico",
     # "爸爸", "弯弯", "湾湾", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", 
     # "书记", "想死", "屏蔽", "干妈", "64", "73", "89", "404",
    
@@ -124,7 +124,10 @@ rules = {
     "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
     "(?i)(t)( ?w| ?g| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
     "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l)": lambda x: letter[x.group(1)] + x.group(2),
-    "(?i)(i ?l ?i ?b ?|p ?i ?l ?i ?|d ?i ?l ?i ?|m ?a ?|m ?i ?)(?=\\1)": lambda x: x.group(1) + "\u0592",
+    "(?i)m ?([ai]) ?(?=m ?\\1)": lambda x: x.group() + "\u0592",
+    "(?i)([dp]) ?i ?l ?i ?(?=\\1 ?i ?l ?i)": lambda x: x.group() + "\u0592",
+    "(?i)i ?l ?i ?b ?(?=i ?l ?i ?b)": lambda x: x.group() + "\u0592",
+    "(?i)n ?i ?c ?o ?(?=n ?i ?c ?o)": lambda x: x.group() + "\u0592",
     "(?i)([.,。，·] ?)(c.?n|c.?o.?m|t ?k)": lambda x: x.group(1) + "\u0592\u0592" + x.group(2),
     "(?i)(a)(.*?j)(.*?p)": lambda x:
         (letter[x.group(1)] + x.group()[1:])
@@ -158,7 +161,7 @@ rules = {
     "([草操日])\\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(点 ?){2}(?=点)": lambda x: x.group()+"\u0592",
     "(大 ?){4}(?=大)": lambda x: x.group()+"\u0592",
-    "([啪爸弯湾] ?)(?=\\1)": lambda x: x.group(1) + "\u0592",
+    "([啪爸弯湾])(?= ?\\1)": lambda x: x.group(1) + "\u0592",
     "鸡.*?(?=鸡)": lambda x: fill(x.group(),3),
     "光.*?(?=光)": lambda x: fill(x.group(),4),
     "共.*?(?=共)": lambda x: fill(x.group(),5),
