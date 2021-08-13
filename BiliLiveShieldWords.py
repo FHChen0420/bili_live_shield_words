@@ -161,7 +161,7 @@ rules = {
     "(?i)(n.*?)(t.*?)(o)(.*p)": lambda x:
         (x.group(1)+x.group(2)+letter[x.group(3)]+x.group(4))
         if measure(x.group(1),4) and measure(x.group(2),2) and measure(x.group(4),2) else x.group(),
-    "(?i)r(?=( ?[^]){0,5} ?i( ?[^]){0,5} ?o( ?[^]){0,5} ?t( ?[^]){0,5} ?s)": lambda x: letter[x.group()], # r#6i#6o#6t#6s
+    "(?i)r(?=( ?[^ ]){0,5} ?i( ?[^ ]){0,5} ?o( ?[^ ]){0,5} ?t( ?[^ ]){0,5} ?s)": lambda x: letter[x.group()], # r#6i#6o#6t#6s
     "(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
         ("".join(x.groups()[:4]) + letter[x.group(5)] + x.group(6))
         if measure(x.group(1),4) and measure(x.group(2),4) and measure(x.group(3),4)
