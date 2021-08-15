@@ -222,7 +222,6 @@ rules = {
     ### 保护型处理规则
     "[习習]": lambda x: x.group()+"\u0592",
 }
-# <DATA END>
 
 def get_len(string):
     '''获取正则表达式串string的字段宽度'''
@@ -243,6 +242,8 @@ def r_pos(string,targets):
     for index,char in enumerate(r_str):
         if char in targets: return len(r_str)-index-1
 
+# <DATA END>
+        
 def substitute(pat,rep,string):
     '''正则替换函数，是re.sub()的一种修改版本'''
     # 目前有个缺点，如果屏蔽字首尾相同或可拆分为更小的重复单元，则可能无法替换干净。
