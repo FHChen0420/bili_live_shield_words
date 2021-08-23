@@ -10,12 +10,12 @@
 + 代码不规范/冗余/处理方法差，望见谅。
 
 ### 代码使用示例
-<code>
-  from BiliLiveAntiShield import BiliLiveAntiShield # 导入反屏蔽类
-  anti_shield=BiliLiveAntiShield() # 创建对象
-  result=anti_shield.deal("初心 asmr") # 执行反屏蔽处理
-  print(result) # 打印处理结果
-</code>
+```
+from BiliLiveAntiShield import BiliLiveAntiShield # 导入反屏蔽类
+anti_shield=BiliLiveAntiShield() # 创建对象
+result=anti_shield.deal("初心 asmr") # 执行反屏蔽处理
+print(result) # 打印处理结果
+```
 
 输出结果：```初`心 αsmr```
 
