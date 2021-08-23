@@ -1,6 +1,6 @@
 # coding:utf-8
 import re
-from BiliLiveShieldWords import rules,words
+from BiliLiveShieldWords import *
 from typing import Callable, Match, Pattern, Union
 Replace=Union[str,Callable[[Match],str]]
 
