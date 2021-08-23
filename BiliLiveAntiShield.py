@@ -5,10 +5,10 @@ from typing import Callable, Match, Pattern, Union
 Replace=Union[str,Callable[[Match],str]]
 
 class BiliLiveAntiShield:
-    def __init__(self,rules:dict[Pattern,Replace]=rules,words:list[str]=words):
+    def __init__(self,rules:dict[str,Replace]=rules,words:list[str]=words):
         '''B站直播弹幕反屏蔽工具
         
-        :param: rules 正则处理字典[正则匹配模式:正则捕获处理函数/字符串]（用于处理较复杂规则）
+        :param: rules 正则处理字典[正则匹配串:正则捕获处理函数/字符串]（用于处理较复杂规则）
         :param: words 屏蔽词列表（用于处理较简单规则）'''
         self.__deal_list:list[tuple[Pattern,Replace]]=[]
         for pat,rep in rules.items():
@@ -56,14 +56,13 @@ class BiliLiveAntiShield:
 
     def deal(self,string:str) -> str:
         '''对字符串string进行反屏蔽处理'''
-        # 外部请调用这个函数。
         for i in self.__deal_list:
             string = self.__substitute(i[0], i[1], string)
         return string
     
 if __name__ == '__main__':
     # 创建对象
-    antiShield=BiliLiveAntiShield()
+    anti_shield=BiliLiveAntiShield()
     # 进行预设文本测试
     texts=[
         "asmr",
@@ -76,8 +75,8 @@ if __name__ == '__main__':
     ]
     for text in texts:
         print("[处理前] "+text)
-        print("[处理后] "+antiShield.deal(text))
+        print("[处理后] "+anti_shield.deal(text))
     # 进行自定义文本测试
     while True:
         string=input("[处理前] ")
-        print("[处理后] "+antiShield.deal(string))
+        print("[处理后] "+anti_shield.deal(string))
