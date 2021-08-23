@@ -11,9 +11,10 @@
 
 ### 代码使用示例
 <code>
-  from BiliLiveShieldWords import deal # [as 别名]  # 导入处理函数
-  
-  print(deal("初心 asmr"))
+  from BiliLiveAntiShield import BiliLiveAntiShield # 导入反屏蔽类
+  anti_shield=BiliLiveAntiShield() # 创建对象
+  result=anti_shield.deal("初心 asmr") # 执行反屏蔽处理
+  print(result) # 打印处理结果
 </code>
 
 输出结果：```初`心 αsmr```
