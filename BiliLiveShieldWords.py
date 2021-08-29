@@ -124,18 +124,18 @@ words =  [
     "[%s]#3[4④]"%(hz_liu_lu),
     
     ### 以下屏蔽词已做其它处理（见rules）
-    # "hk", "tg", "tw", "xi", "zf", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", "fldf", "ntop", "baidu", "antifa", "tmmsme", "yayeae",
+    # "hk", "tw", "xi", "zf", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", "fldf", "ntop", "baidu", "antifa", "tmmsme", "yayeae",
     # "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
-    # "爸爸", "弯弯", "绿绿", "湾湾", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
-    # "书记", "想死", "屏蔽", "干妈", "64", "73", "89", "404",
+    # "弯弯", "绿绿", "湾湾", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
+    # "书记", "想死", "屏蔽", "干妈", "垃圾", "64", "73", "89", "404",
    
     ### 字母+汉字（仅作简单处理）
     "si法", "你ma", "mei药", "媚yao", "lu#2发",  "看#3id", "加#4qq", "diao#3大", "ri#1[我你]", 
 
     ### 以下词汇屏蔽已失效
-    # "神社", "垃圾", "人妻", "改变", "签约", "失望", "控制", "节奏", "赤裸", "天城", "成都",
+    # "神社", "人妻", "改变", "签约", "失望", "控制", "节奏", "赤裸", "天城", "成都", "爸爸",
     # "黑手", "集会", "光荣", "虾膜", "成人", "中央", "万岁", "萝莉", "没了", "死了",
-    # "71", "1921", "av", "sb", "小学生", "不习惯", "发不出", "风平浪静", "老不死的",
+    # "71", "1921", "av", "sb", "tg", "小学生", "不习惯", "发不出", "风平浪静", "老不死的",
 ]
 
 # 反屏蔽处理规则字典，键为正则匹配表达式（字符串, pat），值为处理结果（字符串或函数, rep）
@@ -150,7 +150,9 @@ rules = {
     "Ⅰ": "I", "Ⅱ": "II", "Ⅲ": "III", "Ⅳ": "IV",
     ### 英文非常规处理规则
     "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
-    "(?i)(t)( ?w| ?g| ?a ?m)": lambda x: letter[x.group(1)] + x.group(2),
+    "(?ia)(?<!\\w)(t)( ?w| ?a ?m)(?! ?\\w)": lambda x: letter[x.group(1)] + x.group(2),
+    "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
+    "(?ia)(?<!\\w)(z ?)(f)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l| ?n ?t ?i ?f ?a)": lambda x: letter[x.group(1)] + x.group(2),
     "(?i)i ?s ?(?=i ?s)": lambda x: x.group() + "\u0592",
     "(?i)m ?([ai]) ?(?=m ?\\1)": lambda x: x.group() + "\u0592",
@@ -176,22 +178,16 @@ rules = {
     "(?i)(n.*?)(t.*?)(o)(.*p)": lambda x:
         (x.group(1)+x.group(2)+letter[x.group(3)]+x.group(4))
         if measure(x.group(1),4) and measure(x.group(2),2) and measure(x.group(4),2) else x.group(),
-    "(?i)r(?=( ?[^ ]){0,5} ?i( ?[^ ]){0,5} ?o( ?[^ ]){0,5} ?t( ?[^ ]){0,5} ?s)": lambda x: letter[x.group()], # r#6i#6o#6t#6s
-    "(?i)(y.*?)(a.*?)(y.*?)(e.*?)(a)(.*?e)": lambda x:
-        ("".join(x.groups()[:4]) + letter[x.group(5)] + x.group(6))
-        if measure(x.group(1),4) and measure(x.group(2),4) and measure(x.group(3),4)
-        and measure(x.group(4),4) and measure(x.group(6),4) else x.group(),
-    "(?i)(t)(.*?m)(.*?m)(.*?s)(.*?m)(.*?e)": lambda x:
-        (letter[x.group(1)]+"".join(x.groups()[1:]))
-        if measure(x.group(2),6) and measure(x.group(3),6) and measure(x.group(4),6)
-        and measure(x.group(5),6) and measure(x.group(6),6) else x.group(),
+    "(?i)r(?=( ?[^ ]){0,5} ?i( ?[^ ]){0,5} ?o( ?[^ ]){0,5} ?t( ?[^ ]){0,5} ?s)":                 lambda x: letter[x.group()], # r#6i#6o#6t#6s
+    "(?i)y(?=( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?y( ?[^ ]){0,3} ?e( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?e)": lambda x: letter[x.group()], # y#4a#4y#4e#4a#4e
+    "(?i)t(?=( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?s( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?e)": lambda x: letter[x.group()], # t#6m#6m#6s#6m#6e
     ### 中文/数字非常规处理规则
     "(年|月|天|小 ?时|分 ?钟|分) ?(前)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "([草艹操日])\\W*([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?![^ 你这垃圾a-zA-Z])垃 ?圾(?! ?[桶箱])": "垃1圾", # \u0592不适用
     "(点 ?){2}(?=点)": lambda x: x.group()+"\u0592",
     "(大 ?){4}(?=大)": lambda x: x.group()+"\u0592",
-    "([啪爸绿弯湾])(?= ?\\1)": lambda x: x.group(1) + "\u0592",
+    "([啪绿弯湾])(?= ?\\1)": lambda x: x.group(1) + "\u0592",
     "加 ?速 ?(?=加 ?速)": lambda x: x.group() + "\u0592",
     "嘀 ?哩 ?(?=嘀 ?哩)": lambda x: x.group() + "\u0592",
     "鸡.*?(?=鸡)": lambda x: fill(x.group(),3),
@@ -204,8 +200,6 @@ rules = {
     "(屏 ?)(蔽)(?! ?词)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "[习習](?=.*?平)": lambda x: "Χi",
-    "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "(?ia)(?<!\\w)(z ?)(f)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?a)(?<!\\w)(6 ?)(4)(?! ?\\w)": lambda x: x.group(1)+"４",
     "(?a)(?<!\\w)(7 ?)(3)(?! ?\\w)": lambda x: x.group(1)+"３",
     "(?a)(?<!\\w)(8)( ?[^ ]? ?9)(?! ?\\w)": lambda x: "８"+x.group(2),
