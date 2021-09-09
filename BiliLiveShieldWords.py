@@ -231,9 +231,12 @@ rules = {
     ###$1
     "彩(?=[^ ]?笔[^ ]?们)": add_space,
     "垃(?=[^ ]?[垃圾家])": add_space,
-    "圾(?=[^ ]?垃)": add_space,
     "全(?=[^ ]?家)": add_space,
     "没(?=[^ ]?妈)": add_space,
+    "股(?=[^ ]?间)": add_space,
+    # “病”单独发送也会被屏蔽
+    "[有经](?=[^ ]?病)": add_space,
+    "病(?=[^ ]?[人吧吗嘛啊呢])": add_space,
     "[%s你您](?=[^ ]?[%s])"%(hz_ni,hz_ma): add_space,
     "[%s](?=[^ ]?[%s您])"%(hz_ma,hz_ni): add_space,
     ###$2
