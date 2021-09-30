@@ -21,6 +21,8 @@ hz_ma="马妈吗码玛蚂犸麻嘛骂蟆抹"
 #hz_bo="卜伯驳拨波泊勃柏玻剥饽钵铂菠啵脖舶博渤搏箔播薄簸"
 hz_fa="乏发伐法罚阀砝"
 hz_lun="仑伦论抡沦纶囵轮"
+# 常见标点符号
+p_marks=".,!?+*/#%&()…@~\"\'\\;:<>|=·。，！？；：￥“”‘’—（）【】\-\^\$\[\]" # 用于正则表达式的[]内
 
 add_space = lambda x: x.group()+" "
 
@@ -76,7 +78,7 @@ words =  [
     "boki", "dang", "drug", "fuck", "knee", "kuma", "loli", "nmsl", "sina", "tank", "yuan",
     "bajiu", "bitch", "luoli", "obama", "ruler", "sager", "secom", "shina", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
-    "535", "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "g7", "j8", "g20", "r19", "5km",
+    "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "7.5", "1.23", "g7", "j8", "g20", "r19", "5km",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "就去泡", "一本道",
     "被传染", "网易云", "爱奇艺", "支付宝", "劈腿男", "缘之空", "一起死", "稻田上", "安眠药", "接班人", 
     "纪念日", "为自由", "莉莉安", "李医生", "右大人", "绞肉机", "不唱歌", "女菩萨", "毕业歌", "老鼠台", 
@@ -142,7 +144,7 @@ words =  [
     # "hk", "tw", "xi", "zf", "abs", "sex", "tam", "xjp", "anal", "arms", "asmr", "fldf", "ntop", "baidu", "antifa", "tmmsme", "yayeae",
     # "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
     # "弯弯", "绿绿", "湾湾", "内内", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
-    # "书记", "想死", "屏蔽", "干妈", "垃圾", "64", "73", "89", "404",
+    # "书记", "想死", "屏蔽", "干妈", "垃圾", "64", "73", "89", "404", "535",
    
     ### 字母+汉字（仅作简单处理）
     "si法", "你ma", "mei药", "媚yao", "lu#2发",  "看#3id", "加#4qq", "dio#3[大小]", "diao#3[大小]", "ri#1[我你]", 
@@ -198,7 +200,7 @@ rules = {
     "(?i)t(?=( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?s( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?e)": lambda x: letter[x.group()], # t#6m#6m#6s#6m#6e
     ### 中文/数字非常规处理规则
     "(年|月|天|小 ?时|分 ?钟|分) ?(前)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "([草艹操日][^\\w\r\n\u4e00-\u9fa5]*)([你我他她它]|[比笔逼]|时光)": lambda x: x.group(1)+"\u0592"+x.group(2),
+    "([草艹操日][ %s]*)([你我他她它]|[比笔逼]|时光)"%p_marks: lambda x: x.group(1)+"\u0592"+x.group(2),
     "(点 ?){2}(?=点)": lambda x: x.group()+"\u0592",
     "(大 ?){4}(?=大)": lambda x: x.group()+"\u0592",
     "([啪绿弯湾内])(?= ?\\1)": lambda x: x.group(1) + "\u0592",
@@ -214,11 +216,12 @@ rules = {
     "(屏 ?)(蔽)(?! ?词)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+"\u0592"+x.group(2),
     "[习習](?=.*?平)": lambda x: "Χi",
-    "(?a)(?<!\\w)(6 ?)(4)(?! ?\\w)": lambda x: x.group(1)+"４",
+    "(?a)(?<!\\w)(6[ %s]*)(4)(?! ?\\w)"%p_marks: lambda x: x.group(1)+"４",
     "(?a)(?<!\\w)(7 ?)(3)(?! ?\\w)": lambda x: x.group(1)+"３",
-    "(?a)(?<!\\w)(8)( ?[^ ]? ?9)(?! ?\\w)": lambda x: "８"+x.group(2),
+    "(?a)(?<!\\w)(8)( ?[^ \n\r]? ?9)(?! ?\\w)": lambda x: "８"+x.group(2),
     "(?a)(?<!\\w)(4 ?0 ?)(4)(?! ?\\w)": lambda x: x.group(1)+"４",
-    "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if not (x.group(1)=="6" and x.group(3)=="4") else x.group(),
+    "(?a)(?<!\\w)(5[ %s]*)(3)([ %s]*5)(?! ?\\w)"%(p_marks,p_marks): lambda x: x.group(1)+"３"+x.group(3),
+    "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du_1): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+"\u0592"+x.group(2),
     "([干日草艹操曰黄h].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "[干日草艹操曰]#7视#1频" "[黄h]#3视#1频"
