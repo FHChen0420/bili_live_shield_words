@@ -76,7 +76,7 @@ words =  [
 
     "hw", "gc", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "tmd", "usl", "wic", "xxd",
     "boki", "dang", "drug", "fuck", "knee", "kuma", "loli", "nmsl", "sina", "tank", "yuan",
-    "bajiu", "bitch", "luoli", "obama", "ruler", "sager", "secom", "shina", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok",
+    "bajiu", "bitch", "luoli", "obama", "ruler", "sager", "secom", "shina", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
     "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "g7", "j8", "g20", "r19", "5km",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "就去泡", "一本道",
@@ -264,6 +264,7 @@ rules = {
     "病(?=[^ 0-9]?[人吧吗嘛啊呢哦么])": add_space,
     "[%s你您](?=[^ 0-9]?[%s])"%(hz_ni,hz_ma): add_space,
     "[%s](?=[^ 0-9]?[%s您])"%(hz_ma,hz_ni): add_space,
+    "好多(?=[^ 0-9]?猴)": add_space,
     ###$2
     "恶(?=[^ ]{0,2}[心丑])": add_space,
     "丑(?=[^ ]{0,2}[恶死])": add_space,
