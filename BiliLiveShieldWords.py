@@ -25,6 +25,7 @@ hz_lun="仑伦论抡沦纶囵轮"
 hz_gong="公工功供宫攻恭弓躬龚蚣拱巩汞共贡"
 # 常见标点符号
 p_marks=".,!?+*/#%&()…@~\"\'\\;:<>|=·。，！？；：￥“”‘’—（）【】\-\^\$\[\]" # 用于正则表达式的[]内
+sp="󠀠" #旧版机制分隔符，由U+0592改为U+E0020 (UTF-16)
 
 add_space = lambda x: x.group()+" "
 
@@ -166,7 +167,7 @@ rules = {
     ### 连续半角空格处理
     " +" :" ",
     ### 单字/特殊字符
-    "(?<![花牡虾海车香])蛤(?![蜊蚧子蜃])":"Ha", "蛤": "Ge", "^苟$": "苟\u0592",
+    "(?<![花牡虾海车香])蛤(?![蜊蚧子蜃])":"Ha", "蛤": "Ge", "^苟$": "苟"+sp,
     "翠": "翆", "尻": "𡱧", "爬": "Pa", "痒": "𤶪", "淫":"Yin", "岿": "巍", "屌": "吊", "党": "Dαng", "奠": "Dian", "虵": "蛇",
     "[àáâãäåÀÁÂÃÄÅāǎ]": "a", "[èéêëÈÉÊËēě]": "e", "[ìíîïÌÍÎÏīǐ]": "i", "[òóõôöÒÓÔÕÖōǒ]": "o", "[ùúûüÙÚÛÜūǔ]": "u", "[ǖǘǚǜü]": "v",
     "⑤": "(5)", "⑥": "(6)", "⑧": "(8)", "⑨": "(9)", "⑩": "(10)", "０": "0", "５": "5", "６": "6", "９": "9", "×": "x",
@@ -174,15 +175,15 @@ rules = {
     ### 英文非常规处理规则
     "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
     "(?ia)(?<!\\w)(t)( ?w| ?a ?m)(?! ?\\w)": lambda x: letter[x.group(1)] + x.group(2),
-    "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "(?ia)(?<!\\w)(z ?)(f)(?! ?\\w)": lambda x: x.group(1)+"\u0592"+x.group(2),
+    "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+sp+x.group(2),
+    "(?ia)(?<!\\w)(z ?)(f)(?! ?\\w)": lambda x: x.group(1)+sp+x.group(2),
     "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l| ?n ?t ?i ?f ?a)": lambda x: letter[x.group(1)] + x.group(2),
-    "(?i)i ?s ?(?=i ?s)": lambda x: x.group() + "\u0592",
-    "(?i)m ?([ai]) ?(?=m ?\\1)": lambda x: x.group() + "\u0592",
-    "(?i)([dp]) ?i ?l ?i ?(?=\\1 ?i ?l ?i)": lambda x: x.group() + "\u0592",
-    "(?i)i ?l ?i ?b ?(?=i ?l ?i ?b)": lambda x: x.group() + "\u0592",
-    "(?i)n ?i ?c ?o ?(?=n ?i ?c ?o)": lambda x: x.group() + "\u0592",
-    "(?i)([.,。，·] ?)(c.?n|c.?o.?m|t ?k)": lambda x: x.group(1) + "\u0592\u0592" + x.group(2),
+    "(?i)i ?s ?(?=i ?s)": lambda x: x.group() + sp,
+    "(?i)m ?([ai]) ?(?=m ?\\1)": lambda x: x.group() + sp,
+    "(?i)([dp]) ?i ?l ?i ?(?=\\1 ?i ?l ?i)": lambda x: x.group() + sp,
+    "(?i)i ?l ?i ?b ?(?=i ?l ?i ?b)": lambda x: x.group() + sp",
+    "(?i)n ?i ?c ?o ?(?=n ?i ?c ?o)": lambda x: x.group() + sp,
+    "(?i)([.,。，·] ?)(c.?n|c.?o.?m|t ?k)": lambda x: x.group(1) + sp*2 + x.group(2),
     "(?i)(a)(.*?j)(.*?p)": lambda x:
         (letter[x.group(1)] + x.group()[1:])
         if measure(x.group(2),7) and measure(x.group(3),7) else x.group(),
@@ -208,21 +209,21 @@ rules = {
     "(?i)y(?=( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?y( ?[^ ]){0,3} ?e( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?e)": lambda x: letter[x.group()], # y#4a#4y#4e#4a#4e
     "(?i)t(?=( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?s( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?e)": lambda x: letter[x.group()], # t#6m#6m#6s#6m#6e
     ### 中文/数字非常规处理规则
-    "(年|月|天|小 ?时|分 ?钟|分) ?(前)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "([草艹操日][ %s]*)([你我他她它]|[比笔逼]|时光)"%p_marks: lambda x: x.group(1)+"\u0592"+x.group(2),
-    "(点 ?){2}(?=点)": lambda x: x.group()+"\u0592",
-    "(大 ?){4}(?=大)": lambda x: x.group()+"\u0592",
-    "([啪绿弯湾内色])(?= ?\\1)": lambda x: x.group(1) + "\u0592",
-    "加 ?速 ?(?=加 ?速)": lambda x: x.group() + "\u0592",
-    "嘀 ?哩 ?(?=嘀 ?哩)": lambda x: x.group() + "\u0592",
+    "(年|月|天|小 ?时|分 ?钟|分) ?(前)": lambda x: x.group(1)+sp+x.group(2),
+    "([草艹操日][ %s]*)([你我他她它]|[比笔逼]|时光)"%p_marks: lambda x: x.group(1)+sp+x.group(2),
+    "(点 ?){2}(?=点)": lambda x: x.group()+sp,
+    "(大 ?){4}(?=大)": lambda x: x.group()+sp,
+    "([啪绿弯湾内色])(?= ?\\1)": lambda x: x.group(1) + sp,
+    "加 ?速 ?(?=加 ?速)": lambda x: x.group() + sp,
+    "嘀 ?哩 ?(?=嘀 ?哩)": lambda x: x.group() + sp,
     "鸡.*?(?=鸡)": lambda x: fill(x.group(),3),
     "光.*?(?=光)": lambda x: fill(x.group(),4),
     "共.*?(?=共)": lambda x: fill(x.group(),5),
     "啪.*?(?=啪 ?[^ ]? ?啪)": lambda x: fill(x.group(),3),
     "越(?=( ?[^ ]){0,8} ?共)": "Yue",
-    "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+"\u0592"+x.group(2),
-    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+"\u0592"+x.group(2), # "藤原书记"不是屏蔽词
-    "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+"\u0592"+x.group(2),
+    "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+sp+x.group(2),
+    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+sp+x.group(2), # "藤原书记"不是屏蔽词
+    "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+sp+x.group(2),
     "[习習](?=.*?平)": lambda x: "Χi",
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
     "7\.5": "７.5", "1\.23": "１.23",
@@ -233,7 +234,7 @@ rules = {
     "(?a)(?<!\\w)(5[ %s]*)(3)([ %s]*5)(?! ?\\w)"%(p_marks,p_marks): lambda x: x.group(1)+"３"+x.group(3),
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du_1): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
-    "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+"\u0592"+x.group(2),
+    "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
     "([干日草艹操曰黄h].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "[干日草艹操曰]#7视#1频" "[黄h]#3视#1频"
     "([日草艹曰操].*?)(公.*?)(主)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "操#3公#1主" "[日草艹曰]#9公#1主"
     "([大小妈姐妹哥弟一二三四五六七八九].*?)([小姐妹哥弟一二三四五六七八九].*?)([在来做进])": lambda x:
@@ -247,9 +248,9 @@ rules = {
         (fill(x.group(1),6+r_pos(x.group(1),"马就"))+x.group(2)+x.group(3))
         if measure(x.group(1),6+r_pos(x.group(1),"马就")) and measure(x.group(2),6) else x.group(),
     ### 保护型处理规则
-    "[习習]": lambda x: x.group()+"\u0592",
+    "[习習]": lambda x: x.group()+sp,
     "妖(?=.*?[a-zA-Z_])": "女夭",
-    ### 新版屏蔽字 # \u0592不适用
+    ### 新版屏蔽字 # 旧版机制分隔符不适用
     ###复合/不清楚
     "彩(?=[^ 0-9]?笔[^ 0-9]?们)": add_space,
     "脸(?=[^ 0-9]?[很挺][^ 0-9]?大)": add_space,
@@ -302,7 +303,7 @@ def measure(string,length):
 
 def fill(string,length):
     '''填补字符串string，使其中的非空格字符数等于length'''
-    dots="\u0592"*(length-get_len(string)+string.count(" "))
+    dots=sp*(length-get_len(string)+string.count(" "))
     return string+dots
 
 def r_pos(string,targets):
