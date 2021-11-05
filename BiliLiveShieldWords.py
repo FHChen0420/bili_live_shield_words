@@ -235,8 +235,8 @@ rules = {
     "(?a)(?<!\\w)(5[ %s]*)(3)([ %s]*5)(?! ?\\w)"%(p_marks,p_marks): lambda x: x.group(1)+"３"+x.group(3),
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du_1): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
-    "(?i)(b)(*?a)(.*?i)(.*?[%s都])"%(hz_du_1): 
-        lambda x: ("Ⲃ"+x.group(2)+x.group(3)+x.group(4))
+    "(?i)(b)(.*?a)(.*?i)(.*?[%s都])"%(hz_du_1): lambda x: 
+        ("Ⲃ"+x.group(2)+x.group(3)+x.group(4))
         if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
     "([干日草艹操曰黄h].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "[干日草艹操曰]#7视#1频" "[黄h]#3视#1频"
