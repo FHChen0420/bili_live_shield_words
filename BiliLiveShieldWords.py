@@ -245,8 +245,8 @@ rules = {
         (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九"))+x.group(3))
         if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九")) else x.group(),
     "(?i)([%sail百].*?)([就上去还点被了射让].*?)([来射车有点出被入].*)"%(hz_du_1): lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点被了射"))+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点被了射"))
+        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点被了射让"))+x.group(3))
+        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点被了射让"))
         and not measure(x.group(3),4) else x.group(),
     "([马就].*?)([想上].*?)([鲁撸噜])": lambda x:
         (fill(x.group(1),6+r_pos(x.group(1),"马就"))+x.group(2)+x.group(3))
