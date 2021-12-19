@@ -266,7 +266,7 @@ rules = {
     "[习習]": lambda x: x.group()+sp,
     "妖(?=.*?[a-zA-Z_])": "女夭",
     "(?i)r(?= ?i.*?[你我他她它].*?[妈吗马嘛母m])": lambda x: letter[x.group()],
-    "(?i)t(?= ?a.*?[妈吗马嘛母m家])": lambda x: letter[x.group()],
+    "(?i)t(?= ?a.*?[妈吗马嘛母家])": lambda x: letter[x.group()],
     
     ### 新版屏蔽字 # 旧版机制分隔符不适用
     ###复合/不清楚 （太乱了，啥时候整理一下）
