@@ -79,10 +79,10 @@ words =  [
     "小熊", "汪洋", "吼哇", "吼啊", "之那", "膜导", "长者", "郭嘉", "果加", "菓加",
     "与正", "蒂亚", "稻上", "飞草", "熊学", "伐龙", "家明", "马云", "唐可", "泽东",
     "小瓶", "晓平", "超良", "虫也", "虫合", "换声", "代开", "国动", "气弹", "网球",
-    "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅",
+    "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅", "上面",
     "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "エロ",
 
-    "hw", "gc", "qd", "rh", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tmd", "usl", "wic", "wjb", "xxd",
+    "hw", "gc", "qd", "rh", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tly", "tmd", "usl", "wic", "wjb", "xxd",
     "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
     "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
@@ -237,7 +237,7 @@ rules = {
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+sp+x.group(2),
     "(猎 ?)(人)(?=.*?电 ?影)": lambda x: x.group(1)+sp+x.group(2),
     "([买卖].*?硬 ?)(币)": lambda x: x.group(1)+sp+x.group(2),
-    "[习習](?=.*?(平|苹果))": lambda x: "Χi",
+    "[习習](?=.*?[平苹败])": lambda x: "Χi",
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
     "7\.5": "７.5", "1\.23": "１.23",
     "(?a)(?<!\\w)(6[ %s]*)(4)(?! ?\\w)"%p_marks: lambda x: x.group(1)+"４",
@@ -275,7 +275,7 @@ rules = {
     "[你您他这那](?=.*?位.*?要求)": add_space,
     "睁(?=[^ ]{0,3}[开嘴脸鼻眼脑舌])": add_space,
     "脸(?=.*?像)" : add_space,
-    "[嘴脸鼻眼脑舌](?=.*?[样歪])" : add_space,
+    "[嘴脸鼻眼脑舌个](?=.*?[样歪])" : add_space,
     "(?<![大是])猩猩%s"%(f2): "猩 猩",
     "%s猴子%s"%(f1,f3): "猴 子",
     "%s死%s"%(f1,"(?=[^ 2-79\u4E00-\u9FA5]*$)"): "Si",
@@ -334,6 +334,9 @@ rules = {
     "雑(?! )": add_space,
     "[0-9](?=.*?字母表)": add_space,
     "残(?=[疾障\u0800-\u4E00])": add_space, # 后接日文时进行保护性处理
+    
+    # 临时添加
+    "(?i)oto":"οtο", "(?i)ok": "οk", "(?i)oh+": "ΟΗ", "赢了": "赢1了", 
 }
 
 def get_len(string):
