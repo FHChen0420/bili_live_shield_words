@@ -82,11 +82,12 @@ words =  [
     "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅", 
     "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "エロ",
 
-    "hw", "gc", "qd", "rh", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tly", "tmd", "usl", "wic", "wjb", "xxd",
-    "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
-    "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
+    "gc", "hw", "hk", "qd", "rh", "zf", "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tly", "tmd", "usl", "wic", "wjb", "xxd",
+    "anal", "arms", "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
+    "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina",
+    "antifa", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
-    "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "j8", "g20", "r19", "5km", "100kg",
+    "64", "73", "89", "404", "535", "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "j8", "g20", "r19", "5km", "100kg",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "一本道",
     "被传染", "网易云", "爱奇艺", "支付宝", "劈腿男", "缘之空", "一起死", "稻田上", "安眠药", "接班人", 
     "纪念日", "为自由", "李医生", "右大人", "绞肉机", "不唱歌", "女菩萨", "毕业歌", "老鼠台", 
@@ -106,26 +107,30 @@ words =  [
     "31年", "80年代", "110吗", "1月23", "7月1日", "7月5日", "7月13", "8月17日", "12月28", 
     "命运共同体", "这就是中国", "克里斯托弗", "你是你我是我", "南无阿弥陀佛", "热爱105度", #汉字格式的日期也会被屏蔽，这里没写出来
     
+    # 1.0保护性屏蔽
+    "视频", "公主",
+    
     # 3.0版本屏蔽词, 但可以通过填充字符解决 (部分词语置于长句中时,即使不进行填充,也有较大概率不会被屏蔽)
     "阿姨", "身体", "肉体", "上面", "屏蔽", "尺寸", "务必", "别来", "好大", "玩意",
     "骗子", "黄色", "粉色", "懂吗", "伞兵",
     "小裤裤", "小学生", "没试过", "真可怜", "恐怖游戏", "毫无意义", "自作自受", "prpr",
-    
-    # 3.0保护性屏蔽/临时屏蔽
+    # 3.0保护性屏蔽
     "魔仙", "国吧", "没胸",
 
     ### 字符间隔相关
     "奥#1数#1[魔默]", "一#1口#1[气吃喝]", "收#1[妹弟女]#1[妹弟儿]", "下#1面#2[松紧]", "回#1来#3谢", "观#1众#3v", "还#1没#3封", "姐#1姐#5[逼b]", "妹#1妹#5[逼b]", "弟#1弟#6大", 
-    "射#2出#1来", "v#2p#2n", "湿#2视#2频", "[01]#2找#2[01]",
+    "射#2出#1来", "湿#2视#2频", "[01]#2找#2[01]",
     "[逼b]#3看#1吗", "搜#3这#1个", "投#3比#1赛", "看#3头#1像", "戴#3绿#1帽", "h#3动#1[画漫]", "6#3月#24",
     "同#3性#3恋", "道#3上#3飞", "名#3字#3看", "我#3是#3处", "下#3面#3好", "习#3d#3d", "看#3洗#3澡", "少#3女#3[下自]", "直#3播#3[日草艹操曰]",
     "射#4身#1上", "童#4收#1养", "买#4烟#1花", "删#4评#1论", "改#4中#1国", "花#4全#1裸", "v#4b#3o", "天#4安#4门", "萝#4莉#4控", "正#4太#4控", 
-    "加#4速#4器", "习#4大#4大", "[你尼]#4[妈马吗码蚂玛犸嘛母m家]#4[币比逼必猪狗b]",
-    "手#5指#5插", "徐#5上#5爽", "许#5艾#5莉", "谢#5日#5双", "下#5面#5痒", "[马周]#5上#5[文梦]", "[鲁撸露]#5一#5发", "[徐许]#5[上玩]#5[碧双霜]",
-    "[日草艹操干曰死烧解透跳杀]#6[你尼我他她它]#5[妈马吗码蚂玛犸嘛母m家]", "文#6古#6花", "看#6地#6方", "不#6钱#6[啊3]", "[.]#6c#6c", "[谢x]#6s#6w",
+    "加#4速#4器", "习#4大#4大", "[你尼]#4[妈马吗码蚂玛犸嘛母m家]#4[币比逼必猪狗b]", "[大小妈姐妹哥弟一二三四五六七八九]#4[小姐妹哥弟一二三四五六七八九]#5[在来做进]",
+    "手#5指#5插", "徐#5上#5爽", "许#5艾#5莉", "谢#5日#5双", "下#5面#5痒", "[马周]#5上#5[文梦]", "[鲁撸露]#5一#5发", "[徐许]#5[上玩]#5[碧双霜]", "[马就]#5[想上]#5[鲁撸噜门们]",
+    "[%sail百]#6[就上去还点被了射让]#5[来射车有点出被入]"%(hz_du_1), "[日草艹操干曰死烧解透跳杀]#6[你尼我他她它]#5[妈马吗码蚂玛犸嘛母m家]",
+    "文#6古#6花", "看#6地#6方", "不#6钱#6[啊3]", "[谢x]#6s#6w",
     "准#1备#3纸#1巾", "那#1个#4奶#1奶", "羊#1羊#4结#1婚", "学#1生#4学#1生", "妈#1妈#6唱#1歌", "不#1论#6生#1死", "找#1工#1作#3加",
-    "[01]#2还#1是#2[01]", "你#3画#3我#3猜", "闭#3关#3锁#3国", "不#3穿#3衣#3服",
-    "清#6透#6世#6界", "n#2t#2t#1o#1p", "w#4e#4i#4b#4o", "一#6个#6人#6寂#6寞", "不#1要#6这#1种#1事#1情", "123456789#30",
+    "[01]#2还#1是#2[01]", "你#3画#3我#3猜", "闭#3关#3锁#3国", "不#3穿#3衣#3服", "清#6透#6世#6界", "一#6个#6人#6寂#6寞", "不#1要#6这#1种#1事#1情",
+    "[.]#6c#6c", "a#6j#6p", "s#2e#2x", "v#2p#2n", "x#4j#4p", "x#6y#6z", "a#3s#3m#3r", "f#6l#6d#6f", "n#2t#1o#1p",
+    "n#2t#2t#1o#1p", "r#6i#6o#6t#6s", "w#4e#4i#4b#4o", "t#6m#6m#6s#6m#6e", "y#4a#4y#4e#4a#4e", "7#1[.]#15", "1#1[.]#12#13", "123456789#30",
     
     "吉#1[尔儿]", "野#1[爹妈]", "射#1[爆爽]", "暴#1[饮食]", "就#1[职職]", "腐#1[败敗]", "称#1[王皇帝]", "微#1[博搏勃]", "奶#1[头汁水]", "涩#1[气批片p]", "精#1[美日湛子]", 
     "乳#1[头首量水摇]", "魂#1[一二三123]", "大#1[麻吊弔胸波奶胃]", "点#1[人1cfl]", "死#1[吧妈法ね]", "色#1[图情皮批逼戒狼b]",
@@ -138,8 +143,7 @@ words =  [
     "六#4四", "八#4九", "车#4震", "援#4交", "后#4入", "流#4世", "主#4席", "黄#4网", "赤#4毒", "近#4评", "孤#4儿", "倒#4车", "[阴陰]#4道", 
     "明#4[泽z]", "近#4苹", "[小进]#4平", "[连再]#4任", "[看好]#4胸", "吃#4[比逼币笔]", "[日草艹操干曰吃]#4[姐妹奶姨吊弔]", 
     "留#5水", "性#5爱", "威#5雄",
-    "罗#6莉", "宽#6衣", "彭#6s", "[彭澎p]#6帅", "萝#6[利俐]", "[逼b]#6紧", "[习習]#6[近进]", "加#6v",
-    "幼#8[比逼b]",
+    "罗#6莉", "宽#6衣", "彭#6s", "[彭澎p]#6帅", "萝#6[利俐]", "[逼b]#6紧", "[习習]#6[近进]", "加#6v", "幼#8[比逼b]",
     
     ### 拼音/部首组合相关
     "[%s]#1[一1]#1下"%(hz_du_2),
@@ -165,10 +169,9 @@ words =  [
     "[%s洪哄烘]#17"%(hz_gong),
     
     ### 以下屏蔽词已做其它处理（见rules）
-    # "hk", "tw", "xi", "zf", "abs", "sex", "tam", "xjp", "xyz", "anal", "arms", "asmr", "fldf", "ntop", "baidu", "antifa", "tmmsme", "yayeae",
-    # "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
+    # "tw", "xi", "tam", "baidu", "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
     # "弯弯", "绿绿", "湾湾", "内内", "色色", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
-    # "书记", "想死", "干妈", "垃圾", "64", "73", "89", "404", "535", "7\.5", "1\.23",
+    # "书记", "想死", "干妈", "垃圾",
    
     ### 字母+汉字（仅作简单处理）
     "si法", "你ma", "mei药", "媚yao", "吃shi", "lu#2发",  "看#3id", "加#4qq", "[微薇]#4bo", "dio#3[大小]", "diao#3[大小]", "ri#1[我你]", 
@@ -187,49 +190,22 @@ rules = {
     " +" :" ",
     ### 单字/特殊字符
     "(?<![花牡虾海车香])蛤(?![蜊蚧子蜃])":"Ha", "蛤": "Ge", "^苟$": "苟"+sp,
-    "翠": "翆", "尻": "𡱧", "淫":"Yin", "岿": "巍", "屌": "吊", "党": "Dαng", "慎": "Shen", "虵": "蛇", "醜": "醜 1",
+    "翠": "翆", "尻": "𡱧", "淫":"Yin", "岿": "巍", "屌": "吊", "党": "Dαng", "慎": "Shen",
     "[àáâãäåÀÁÂÃÄÅāǎ]": "a", "[èéêëÈÉÊËēě]": "e", "[ìíîïÌÍÎÏīǐ]": "i", "[òóõôöÒÓÔÕÖōǒ]": "o", "[ùúûüÙÚÛÜūǔ]": "u", "[ǖǘǚǜü]": "v",
     "⑤": "(5)", "⑥": "(6)", "⑧": "(8)", "⑨": "(9)", "⑩": "(10)", "０": "0", "５": "5", "６": "6", "９": "9", "×": "x", "♀": "",
     "Ⅰ": "I", "Ⅱ": "II", "Ⅲ": "III", "Ⅳ": "IV",
     ### 英文非常规处理规则
-    "(?i)(h ?)(k)": lambda x: x.group(1) + letter[x.group(2)],
     "(?ia)(?<!\\w)(t)( ?w| ?a ?m)(?! ?\\w)": lambda x: letter[x.group(1)] + x.group(2),
     "(?ia)(?<!\\w)(x ?)(i)(?! ?\\w)": lambda x: x.group(1)+sp+x.group(2),
-    "(?ia)(?<!\\w)(z ?)(f)(?! ?\\w)": lambda x: x.group(1)+sp+x.group(2),
-    "(?i)(a)(rm ?s| ?b ?s| ?n ?a ?l| ?n ?t ?i ?f ?a)": lambda x: letter[x.group(1)] + x.group(2),
     "(?i)i ?s ?(?=i ?s)": lambda x: x.group() + sp,
     "(?i)m ?([ai]) ?(?=m ?\\1)": lambda x: x.group() + sp,
     "(?i)([dp]) ?i ?l ?i ?(?=\\1 ?i ?l ?i)": lambda x: x.group() + sp,
     "(?i)i ?l ?i ?b ?(?=i ?l ?i ?b)": lambda x: x.group() + sp,
     "(?i)n ?i ?c ?o ?(?=n ?i ?c ?o)": lambda x: x.group() + sp,
     "(?i)([.,。，·] ?)(c.?n|c.?o.?m|t ?k)": lambda x: x.group(1) + sp*2 + x.group(2),
-    "(?i)(a)(.*?j)(.*?p)": lambda x:
-        (letter[x.group(1)] + x.group()[1:])
-        if measure(x.group(2),7) and measure(x.group(3),7) else x.group(),
-    "(?i)(a)(.*?s)(.*?m)(.*?r)": lambda x: #asmr四个字母任意顺序排列均会被屏蔽，这里只考虑常见情况
-        (letter[x.group(1)] + x.group()[1:])
-        if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
-    "(?i)(f.*?)(l)(.*?d)(.*?f)": lambda x:
-        (x.group(1)+letter[x.group(2)]+x.group(3)+x.group(4))
-        if measure(x.group(1),7) and measure(x.group(3),7) and measure(x.group(4),7) else x.group(),
-    "(?i)(s.*?)(e.*?)(x)": lambda x:
-        (x.group(1)+x.group(2)+letter[x.group(3)])
-        if measure(x.group(1),3) and measure(x.group(2),3) else x.group(),
-    "(?i)(x)(.*?j)(.*?p)": lambda x:
-        (letter[x.group(1)]+x.group(2)+x.group(3))
-        if measure(x.group(2),5) and measure(x.group(3),5) else x.group(),
-    "(?i)(x)(.*?y)(.*?z)": lambda x:
-        (letter[x.group(1)]+x.group(2)+x.group(3))
-        if measure(x.group(2),7) and measure(x.group(3),7) else x.group(),
-    "(?i)(n.*?)(t.*?)(o)(.*p)": lambda x:
-        (x.group(1)+x.group(2)+letter[x.group(3)]+x.group(4))
-        if measure(x.group(1),4) and measure(x.group(2),2) and measure(x.group(4),2) else x.group(),
-    "(?i)r(?=( ?[^ ]){0,5} ?i( ?[^ ]){0,5} ?o( ?[^ ]){0,5} ?t( ?[^ ]){0,5} ?s)":                 lambda x: letter[x.group()], # r#6i#6o#6t#6s
-    "(?i)y(?=( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?y( ?[^ ]){0,3} ?e( ?[^ ]){0,3} ?a( ?[^ ]){0,3} ?e)": lambda x: letter[x.group()], # y#4a#4y#4e#4a#4e
-    "(?i)t(?=( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?s( ?[^ ]){0,5} ?m( ?[^ ]){0,5} ?e)": lambda x: letter[x.group()], # t#6m#6m#6s#6m#6e
-    ### 中文/数字非常规处理规则
-    "(年|月|天|小 ?时|分 ?钟|分) ?(前)": lambda x: x.group(1)+sp+x.group(2),
-    "([草艹操日][ %s]*)([你我他她它]|[比笔逼]|时光)"%p_marks: lambda x: x.group(1)+sp+x.group(2),
+    ### 中文非常规处理规则
+    "(年|月|天|小 ?时|分 ?钟?) ?(前)": lambda x: x.group(1)+sp+x.group(2),
+    "([草艹操日][ %s]*)([你我他她它比笔逼]|时光)"%p_marks: lambda x: x.group(1)+sp+x.group(2),
     "(点 ?){2}(?=点)": lambda x: x.group()+sp,
     "(大 ?){4}(?=大)": lambda x: x.group()+sp,
     "([啪绿弯湾内色])(?= ?\\1)": lambda x: x.group(1) + sp,
@@ -241,36 +217,16 @@ rules = {
     "啪.*?(?=啪 ?[^ ]? ?啪)": lambda x: fill(x.group(),3),
     "越(?=( ?[^ ]){0,8} ?共)": "Yue",
     "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+sp+x.group(2),
-    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+sp+x.group(2), # "藤原书记"不是屏蔽词
+    "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+sp+x.group(2),
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+sp+x.group(2),
     "(猎 ?)(人)(?=.*?电 ?影)": lambda x: x.group(1)+sp+x.group(2),
     "([买卖].*?硬 ?)(币)": lambda x: x.group(1)+sp+x.group(2),
     "[习習](?=.*?[平苹])": lambda x: "Χi",
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
-    "7\.5": "７.5", "1\.23": "１.23",
-    "(?a)(?<!\\w)(6[ %s]*)(4)(?! ?\\w)"%p_marks: lambda x: x.group(1)+"４",
-    "(?a)(?<!\\w)(7 ?)(3)(?! ?\\w)": lambda x: x.group(1)+"３",
-    "(?a)(?<!\\w)(8)( ?[^ \n\r]? ?9)(?! ?\\w)": lambda x: "８"+x.group(2),
-    "(?a)(?<!\\w)(4 ?0 ?)(4)(?! ?\\w)": lambda x: x.group(1)+"４",
-    "(?a)(?<!\\w)(5[ %s]*)(3)([ %s]*5)(?! ?\\w)"%(p_marks,p_marks): lambda x: x.group(1)+"３"+x.group(3),
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du_1): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
-    "(?i)(b)(.*?a)(.*?i)(.*?[%s都])"%(hz_du_1): lambda x: 
-        ("Ⲃ"+x.group(2)+x.group(3)+x.group(4))
-        if measure(x.group(2),4) and measure(x.group(3),4) and measure(x.group(4),4) else x.group(),
+    "(?i)b(?=( ?[^ b]){0,2} ?a( ?[^ ]){0,2} ?i( ?[^ ]){0,2} ?[%s都])"%(hz_du_1): "Ⲃ", 
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
-    "([干日草艹操曰黄h].*?)(视.*?)(频)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "[干日草艹操曰]#7视#1频" "[黄h]#3视#1频"
-    "([日草艹曰操].*?)(公.*?)(主)": lambda x: x.group(1)+fill(x.group(2),2)+x.group(3), # "操#3公#1主" "[日草艹曰]#9公#1主"
-    "([大小妈姐妹哥弟一二三四五六七八九].*?)([小姐妹哥弟一二三四五六七八九].*?)([在来做进])": lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九"))+x.group(3))
-        if measure(x.group(1),5) and measure(x.group(2),5+r_pos(x.group(2),"小姐妹哥弟一二三四五六七八九")) else x.group(),
-    "(?i)([%sail百].*?)([就上去还点被了射让].*?)([来射车有点出被入].*)"%(hz_du_1): lambda x:
-        (x.group(1)+fill(x.group(2),5+r_pos(x.group(2),"就上去还点被了射让"))+x.group(3))
-        if measure(x.group(1),7) and measure(x.group(2),5+r_pos(x.group(2),"就上去还点被了射让"))
-        and not measure(x.group(3),4) else x.group(),
-    "([马就].*?)([想上].*?)([鲁撸噜门们])": lambda x:
-        (fill(x.group(1),6+r_pos(x.group(1),"马就"))+x.group(2)+x.group(3))
-        if measure(x.group(1),6+r_pos(x.group(1),"马就")) and measure(x.group(2),6) else x.group(),
     
     
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格（太乱了，啥时候整理一下）
@@ -320,7 +276,7 @@ rules = {
     # [AB]型
     "欧派|贫乳|尸体|肮脏|奴隶|习[惯俗性]|舰(?= ?[a-zA-Z])|[习習](?=.*?败)|[Bb]站?限定?|(?<![心肝内肮])脏(?![器话]|东西)|日本人?": lambda x: "["+x.group()+"]",
     "死(?= ?[吧吗嘛啊呢哦么了掉])": lambda x: "["+x.group()+"]",
-    "(?<![清干水没])洗(?![脸头发手澡衣涤好地]|铁路)": lambda x: "["+x.group()+"]",
+    "(?<![清干水没])洗(?![脸头发手澡衣涤好]|铁路)": lambda x: "["+x.group()+"]",
     "(?<![\u4E00-\u9FA5])够了": lambda x: "["+x.group()+"]",
     "(?<![\u4E00-\u9FA5])熊(?![熊猫])": lambda x: "["+x.group()+"]",
     "(?<!臭)臭+(?![\u4E00-\u9FA5])": lambda x: "["+x.group()+"]",
@@ -351,18 +307,9 @@ def get_len(string):
     '''获取正则表达式串string的字段宽度'''
     return len(re.sub(r"\[.+?\]","~",string))
 
-def measure(string,length):
-    '''判断字符串string中非空格字符数是否小于length'''
-    return get_len(string)-string.count(" ")<length
-
 def fill(string,length):
     '''填补字符串string，使其中的非空格字符数等于length'''
     dots=sp*(length-get_len(string)+string.count(" "))
     return string+dots
 
-def r_pos(string,targets):
-    '''查找字符串targets中的字符在字符串string中最后一次出现的位置'''
-    r_str=string.replace(" ","")[::-1]
-    for index,char in enumerate(r_str):
-        if char in targets: return len(r_str)-index-1
 # <DATA END>
