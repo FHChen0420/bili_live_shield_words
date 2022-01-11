@@ -249,7 +249,7 @@ rules = {
     "[嘴脑](?=[^\s\d]?跟)": add_space,
     "没(?=有?([妈马吗码蚂玛犸嘛]|眼睛|脑子|头脑))": add_space,
     "[妈马吗码蚂玛犸嘛](?=[^\s\d]?没)": add_space,
-    "([有经尿][^\s\d]{0,3})(病)": lambda x: x.group(1)+" bing ",
+    "(有[^\s\d]{0,3})(?<!中二)(病)": lambda x: x.group(1)+"bing",
     "[%s你您](?=[^\s\d]?[%s])"%(hz_ni,hz_ma): add_space,
     "[%s](?=[^\s\d]?[%s您])"%(hz_ma,hz_ni): add_space,
     "[日草艹操干曰死烧解透跳杀](?=.*?[你尼我他她它].*?[妈马吗码蚂玛犸嘛母m家])": add_space,
