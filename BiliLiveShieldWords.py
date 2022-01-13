@@ -8,9 +8,9 @@ hz_pin_ping="拼贫频品聘乒平评凭坪屏瓶苹萍"
 hz_ba="八巴扒叭坝把吧芭爸拔疤笆粑耙罢捌跋靶魃霸"
 hz_jiu="九久旧纠臼究鸠玖灸咎疚韭赳柩酒阄救厩就揪啾舅鹫"
 hz_jiu_1="九久纠究鸠玖灸韭赳阄揪啾"
-hz_bai="白百伯呗佰拝败拜柏掰摆"
-hz_du_1="妒杜肚笃毒独度读堵渎犊椟赌渡嘟督睹镀" # 排除：竺都
-hz_du_2="都杜肚毒独度堵渡睹镀"
+hz_bai="白百伯佰拜柏掰" # 排除：败摆
+hz_du_1="度渡镀肚杜堵睹赌读渎犊椟独毒嘟督笃妒" # 排除：竺都
+hz_du_2="度渡镀肚杜堵睹独毒都"
 hz_liu_lu="六刘柳浏流留琉硫碌溜馏遛榴瘤卢庐芦陆卤虏炉录鸬赂鹿颅绿鲁禄鲈路噜撸辘戮橹璐鹭露" # 重复：六碌
 hz_si_shi="四司丝死寺似私祀伺饲驷食思斯肆嗣厮撕嘶十尸士氏什示矢石史市失仕世式师时识始饰视鸤虱实驶事势使侍诗试施恃柿是蚀拭适室狮拾屎峙舐轼逝硕匙释湿谥弑誓嗜噬螫" # 重复：似食
 #hz_wei="卫为韦未危伪伟围纬尾违苇位委味畏威娓维惟唯帷萎偎谓尉喂猥痿微蔚薇魏巍"
@@ -83,7 +83,7 @@ words =  [
 
     "gc", "hw", "hk", "qd", "rh", "zf", "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tmd", "usl", "wic", "wjb", "xxd",
     "anal", "arms", "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
-    "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina",
+    "baidu", "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina",
     "antifa", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
     "64", "73", "89", "404", "535", "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "j8", "g20", "r19", "5km", "100kg",
@@ -142,13 +142,14 @@ words =  [
     "[%s]#1[一1]#1下"%(hz_du_2),
     "[%s]#3大#1大"%(hz_xi),
     "[%s]#3没#1了"%(hz_ma),
-    "[%s干]#3[一1]#4下"%(hz_bai), # 顺带处理"干#3一#3下"
+    "[%s摆败干]#3[一1]#4下"%(hz_bai), # 顺带处理"干#3一#3下"
     "[两量凉梁良粮粱]#4[加家架假甲嫁佳贾驾茄夹+]#4[和河何呵喝核合盒贺禾荷]", #待补充
     "[裸棵菓粿踝]#1聊",
     "[%s]#1[%s]"%(hz_wei_1,hz_ni),
     "[%s]#1尼"%(hz_wei_2),
     "[%s]#3博"%(hz_wei_3),
-    "[%s]#1都"%(hz_bai),
+    "[%s]#1[%s读赌]"%(hz_bai,hz_du_2),
+    "[百白]#3[渡镀]", "白#3度", # "百度",
     "[%scx]#2[%s呼砰怦秤抨]"%(hz_xi,hz_pin_ping),
     "[%s]#2p"%(hz_xi),
     "[%s8⑧]#3[%s]"%(hz_ba,hz_jiu),
@@ -162,7 +163,7 @@ words =  [
     "[%s洪哄烘]#17"%(hz_gong),
     
     ### 以下屏蔽词已做其它处理（见rules）
-    # "tw", "xi", "tam", "baidu", "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
+    # "tw", "xi", "tam", "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
     # "弯弯", "绿绿", "湾湾", "内内", "色色", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
     # "书记", "想死", "干妈",
    
@@ -217,8 +218,6 @@ rules = {
     "[习習](?=.*?[平苹])": lambda x: "Χi",
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
     "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
-    "(?i)([%s贝呗]|b ?a ?i)(?=.*?([%s]|d ?u))"%(hz_bai,hz_du_1): lambda x: "Ⲃei" if x.group() in "贝呗" else "Ⲃai",
-    "(?i)b(?=( ?[^\sb]){0,2} ?a( ?\S){0,2} ?i( ?\S){0,2} ?[%s都])"%(hz_du_1): "Ⲃ", 
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
     ### 保护型处理规则
     "[习習]": lambda x: x.group()+sp,
@@ -239,7 +238,7 @@ rules = {
     "全 ?家 ?炸": "全 家/炸",
     "母韵|太笨|整形|全家|变态|垃圾(?!游戏)|整容|彩笔|狒狒|闭嘴|双亲|渣女|股间|矮子|小偷"+
     "|愚蠢|脑子|脏话|脏东西|臭小鬼|老太婆|你是个[Pp]|难[看听]|[男女]妖": lambda x: x.group()[0]+" "+x.group()[1:],
-    "%s(猴子|猩猩|村人|爹妈|笨笨|吃的吗|孤勇者|断[手脖]|作[文者啊吧吗么])%s"%(f1,f2): lambda x: x.group()[0]+" "+x.group()[1:],
+    "%s(猴子|猩猩|村人|爹妈|笨笨|吃的吗|断[手脖]|作[文者啊吧吗么])%s"%(f1,f2): lambda x: x.group()[0]+" "+x.group()[1:],
     "尼嚎": "你好",
     "快死": "快 "+sp+"死",
     "牲畜": "牲 1畜",
