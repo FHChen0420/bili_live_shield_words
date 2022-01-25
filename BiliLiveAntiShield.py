@@ -4,7 +4,7 @@ from typing import Callable, Match, Pattern, Union, Tuple, List, Dict
 Replace=Union[str,Callable[[Match],str]]
 
 class BiliLiveAntiShield:
-    def __init__(self,rules:Dict[str,Replace],words:List[str],filler:str="󠀠"):
+    def __init__(self,rules:Dict[str,Replace],words:List[str],filler:str="\U000E0020"):
         '''B站直播弹幕反屏蔽工具
         
         :param: rules 正则处理字典[正则匹配串:正则捕获处理函数/字符串]（用于处理较复杂规则）
