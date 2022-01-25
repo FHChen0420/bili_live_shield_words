@@ -27,9 +27,10 @@ hz_gong="公工功供宫攻恭弓躬龚蚣拱巩汞共贡"
 p_marks=".,!?+*/#%&^$`(){}…@~\"\'\\;:<>|=·。，！？；：￥“”‘’—（）【】「」\-\[\]" # 用于正则表达式的[]内
 f1="(?<![\s\d\u4E00-\u9FA5])"
 f2="(?![\s\d\u4E00-\u9FA5])"
-sp="󠀠" #旧版机制分隔符，由U+0592改为U+E0020 (UTF-16)
+sp="\U000E0020" #旧版机制分隔符，由U+0592改为U+E0020
 
 add_space = lambda x: x.group()+" "
+insert_space = lambda x: x.group()[0]+" "+x.group()[1:]
 
 # 部分英文字母的处理规则字典（一般替换为希腊字母或全角字母）
 letter={
@@ -78,7 +79,7 @@ words =  [
     "小熊", "吼哇", "吼啊", "之那", "膜导", "长者", "長者", "郭嘉", "果加", "菓加",
     "与正", "蒂亚", "稻上", "飞草", "熊学", "伐龙", "家明", "马云", "唐可", "泽东",
     "小瓶", "晓平", "超良", "虫也", "虫合", "换声", "代开", "国动", "气弹", "网球",
-    "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅", "汪洋", 
+    "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅", "汪洋", "楚晨",
     "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "エロ",
 
     "gc", "hw", "hk", "qd", "rh", "zf", "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tmd", "usl", "wic", "wjb", "xxd",
@@ -86,7 +87,7 @@ words =  [
     "baidu", "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina",
     "antifa", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
-    "64", "73", "89", "404", "535", "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "j8", "g20", "r19", "5km", "100kg",
+    "64", "73", "404", "535", "586", "604", "809", "817", "881", "918", "1926", "1953", "1979", "1989", "j8", "g20", "r19", "5km", "100kg",
     "不想活", "自由门", "咖啡因", "死灵魂", "白衬衫", "生理期", "空气炮", "黑历史", "一本道",
     "被传染", "网易云", "爱奇艺", "支付宝", "劈腿男", "缘之空", "一起死", "稻田上", "安眠药", "接班人", 
     "纪念日", "为自由", "李医生", "右大人", "绞肉机", "不唱歌", "女菩萨", "毕业歌", "老鼠台", 
@@ -163,7 +164,7 @@ words =  [
     "[%s洪哄烘]#17"%(hz_gong),
     
     ### 以下屏蔽词已做其它处理（见rules）
-    # "tw", "xi", "tam", "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico",
+    # "tw", "xi", "tam", "isis", "mama", "mimi", "ilibilib", "pilipili", "dilidili", "niconico", "89",
     # "弯弯", "绿绿", "湾湾", "内内", "色色", "啪啪", "啪#2啪#2啪", "鸡#2鸡", "光#3光", "共#4共", "点点点", "大大大大大", "嘀哩嘀哩", "加速加速",
     # "书记", "想死", "干妈",
    
@@ -197,6 +198,7 @@ rules = {
     "(?i)([dp]) ?i ?l ?i ?(?=\\1 ?i ?l ?i)": lambda x: x.group() + sp,
     "(?i)n ?i ?c ?o ?(?=n ?i ?c ?o)": lambda x: x.group() + sp,
     "(?i)([.,。，·] ?)(c.?n|c.?o.?m|t ?k)": lambda x: x.group(1) + sp*2 + x.group(2),
+    "(?<!\w)8 ?(?:[^\s9] ?)?(?=9(?! ?\w))": lambda x: fill(x.group(),3), 
     ### 中文非常规处理规则
     "([草艹操日][ %s]*)([你我他她它比笔逼]|时光)"%p_marks: lambda x: x.group(1)+sp+x.group(2),
     "(点 ?){2}(?=点)": lambda x: x.group()+sp,
@@ -208,16 +210,16 @@ rules = {
     "光.*?(?=光)": lambda x: fill(x.group(),4),
     "共.*?(?=共)": lambda x: fill(x.group(),5),
     "啪.*?(?=啪 ?[^ ]? ?啪)": lambda x: fill(x.group(),3),
-    "越(?=( ?[^ ]){0,8} ?共)": "Yue",
+    "越(?=(?: ?[^ ]){0,8} ?共)": "Yue",
     "(想 ?)(死)(?! ?你)": lambda x: x.group(1)+sp+x.group(2),
     "(书 ?)(记)(?! ?舞)": lambda x: x.group(1)+sp+x.group(2),
     "(?<!老)(干 ?)(妈)": lambda x: x.group(1)+sp+x.group(2),
     "(猎 ?)(人)(?=.*?电 ?影)": lambda x: x.group(1)+sp+x.group(2),
     "([买卖].*?硬 ?)(币)": lambda x: x.group(1)+sp+x.group(2),
-    "(小 ?学|[初高] ?中)(?=.*?(外|语|政 ?治))": lambda x: x.group()[0]+sp+x.group()[1:], # 格式：甲#1乙#9丙(#1丁)
+    "(小 ?学|[初高] ?中)(?=.*?(?:[外语]|政 ?治))": lambda x: x.group()[0]+sp+x.group()[1:], # 格式：甲#1乙#9丙(#1丁)
     "[习習](?=.*?[平苹])": lambda x: "Χi",
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
-    "(?i)(六|6|⑥|l ?i ?u)(.*?)(四|肆|4|④|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
+    "(?i)([六6⑥]|l ?i ?u)(.*?)([四肆4④]|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
     ### 保护型处理规则
     "[习習]": lambda x: x.group()+sp,
@@ -226,44 +228,44 @@ rules = {
     
     
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格（太乱了，啥时候整理一下）
-    "[嘴脸鼻眼脑舌](?=[^\s\d]{0,6}[胖矮丑烦笨傻蠢怪臭土大睁垃])": add_space,
-    "[你您他她这个](?=[^\s\d]{0,3}[脸嘴鼻脑舌货猴胖矮丑烦笨傻蠢怪臭土歪睁垃])": add_space,
+    "尼嚎": "你好", "牲畜": "牲 1畜", "人妖": "人 1妖", "智障": "智 1障", "快死": "快 "+sp+"死", "咖喱 ?人": "咖喱Ren", "全 ?家 ?炸": "全 家/炸",
+    
+    "母韵": insert_space, "太笨": insert_space, "全家": insert_space, "变态": insert_space, "彩笔": insert_space, 
+    "狒狒": insert_space, "闭嘴": insert_space, "双亲": insert_space, "渣女": insert_space, "股间": insert_space, 
+    "矮子": insert_space, "小偷": insert_space, "愚蠢": insert_space, "脑子": insert_space, "大妈": insert_space,
+    "臭小鬼": insert_space, "老太婆": insert_space, "脏(?:话|东西)": insert_space, "垃圾(?!游戏)": insert_space,
+    "你是个[Pp]": insert_space, "整[形容]": insert_space, "难[看听]": insert_space, "[男女]妖": insert_space, 
+    "滚[滚开]": insert_space, "心[恶丑]": insert_space,
+    
+    "%s猴子%s"%(f1,f2): insert_space, "%s猩猩%s"%(f1,f2): insert_space, "%s村人%s"%(f1,f2): insert_space,
+    "%s爹妈%s"%(f1,f2): insert_space, "%s笨笨%s"%(f1,f2): insert_space, "%s孤勇者%s"%(f1,f2): insert_space,
+    "%s吃的吗%s"%(f1,f2): insert_space, "%s断[手脖]%s"%(f1,f2): insert_space, "%s作[文者啊吧吗么]%s"%(f1,f2): insert_space,
+    
+    "[嘴脸鼻眼脑舌](?=[^\s\d]{0,6}?[胖矮丑烦笨傻蠢怪臭土大睁垃])": add_space,
+    "[你您他她这个](?=[^\s\d]{0,3}?[脸嘴鼻脑舌货猴胖矮丑烦笨傻蠢怪臭土歪睁垃])": add_space,
     "[你您他这那](?=.*?位.*?要求)": add_space,
-    "睁(?=\S{0,3}[开嘴脸鼻眼脑舌])": add_space,
+    "睁(?=\S{0,3}?[开嘴脸鼻眼脑舌])": add_space,
     "脸(?=.*?像)" : add_space,
     "[嘴脸鼻眼脑舌个](?=.*?[样歪])" : add_space,
-    "%s妖(?!([\s\d\u4E00-\u9FA5] ?){2})"%(f1): add_space,
+    "%s妖(?!(?:[\s\d\u4E00-\u9FA5] ?){2})"%(f1): add_space,
     "%s死(?![\s2-79\u4E00-\u9FA5])"%(f1): "Si",
-    "咖喱 ?人": "咖喱/ 人",
-    "全 ?家 ?炸": "全 家/炸",
-    "母韵|太笨|整形|全家|变态|垃圾(?!游戏)|整容|彩笔|狒狒|闭嘴|双亲|渣女|股间|矮子|小偷"+
-    "|愚蠢|脑子|脏话|脏东西|臭小鬼|老太婆|你是个[Pp]|难[看听]|[男女]妖": lambda x: x.group()[0]+" "+x.group()[1:],
-    "%s(猴子|猩猩|村人|爹妈|笨笨|孤勇者|吃的吗|断[手脖]|作[文者啊吧吗么])%s"%(f1,f2): lambda x: x.group()[0]+" "+x.group()[1:],
-    "尼嚎": "你好",
-    "快死": "快 "+sp+"死",
-    "牲畜": "牲 1畜",
-    "人妖": "人 1妖",
-    "智障": "智 1障",
-    "大(?=(妈|[^\s\d]?舌))": add_space,
+    "大(?=[^\s\d]?舌)": add_space,
     "[嘴脑](?=[^\s\d]?跟)": add_space,
-    "没(?=有?([妈马吗码蚂玛犸嘛]|眼睛|脑子|头脑))": add_space,
+    "没(?=有?(?:[妈马吗码蚂玛犸嘛]|眼睛|脑子|头脑))": add_space,
     "[妈马吗码蚂玛犸嘛](?=[^\s\d]?没)": add_space,
     "(有[^\s\d]{0,3})(?<!中二)(病)": lambda x: x.group(1)+"bing",
     "[%s你您](?=[^\s\d]?[%s])"%(hz_ni,hz_ma): add_space,
     "[%s](?=[^\s\d]?[%s您])"%(hz_ma,hz_ni): add_space,
     "[日草艹操干曰死烧解透跳杀](?=.*?[你尼我他她它].*?[妈马吗码蚂玛犸嘛母m家])": add_space,
-    "[你您他她男女人][^\s人]?(?=[^\s\d]?(多.*?话|话.*?多|话%s))"%(f2): add_space,
+    "[你您他她男女人][^\s人]?(?=[^\s\d]?(?:多.*?话|话.*?多|话%s))"%(f2): add_space,
     "好多(?=[^\s\d]?猴)": add_space,
     "恶(?=\S?[心丑])": add_space,
-    "心(?=\S?[恶丑])": add_space,
-    "滚(?=\S?[滚开])": add_space,
     "丑(?=\S?([恶死女男吧吗嘛啊呢哦么]|八怪))": add_space,
     "死(?=\S?[心狗吧吗嘛啊呢哦么宅])": add_space,
     "[病笨傻](?=[^\s\d]{0,2}[样人吧吗嘛啊呢哦么了])": add_space,
     "[笨傻](?=.{0,2}[逼比笔币Bb])": lambda x: x.group()+" 1",
     "[猪狗](?=\S{0,2}种)": lambda x: x.group()+" / ",
     "[一条](?=[^\s\d条]{0,2}狗)": add_space,
-    "(?<!愚)蠢(?! )": add_space,
     "雑(?! )": add_space,
     "\d(?=.*?字母表)": add_space,
     "残(?=[疾障\u0800-\u4E00])": add_space, # 后接日文时进行保护性处理
