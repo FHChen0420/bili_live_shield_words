@@ -82,7 +82,7 @@ words =  [
     "追思", "佐助", "腊肉", "抑郁", "发漂", "咧嘴", "莉娅", "丽娅", "汪洋", "楚晨",
     "ロリ", "はま", "ハマ", "しな", "シナ", "くま", "エロ",
 
-    "gc", "hw", "hk", "qd", "rh", "zf", "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "tmd", "usl", "wic", "wjb", "xxd",
+    "gc", "hw", "hk", "qd", "rh", "zf", "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ply", "roc", "soe", "tmd", "usl", "wic", "wjb", "xxd",
     "anal", "arms", "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
     "baidu", "bajiu", "bitch", "ching", "luoli", "obama", "ruler", "sager", "secom", "shina",
     "antifa", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
@@ -186,7 +186,7 @@ rules = {
     " +" :" ",
     ### 单字/特殊字符
     "(?<![花牡虾海车香])蛤(?![蜊蚧子蜃])":"Ha", "蛤": "Ge",
-    "翠": "翆", "尻": "𡱧", "淫":"Yin", "岿": "巍", "屌": "吊", "党": "Dαng", "慎": "Shen",
+    "翠": "翆", "猪": "猪", "尻": "𡱧", "淫":"Yin", "岿": "巍", "屌": "吊", "党": "Dαng", "慎": "Shen",
     "[àáâãäåÀÁÂÃÄÅāǎ]": "a", "[èéêëÈÉÊËēě]": "e", "[ìíîïÌÍÎÏīǐ]": "i", "[òóõôöÒÓÔÕÖōǒ]": "o", "[ùúûüÙÚÛÜūǔ]": "u", "[ǖǘǚǜü]": "v",
     "⑤": "(5)", "⑥": "(6)", "⑧": "(8)", "⑨": "(9)", "⑩": "(10)", "０": "0", "５": "5", "６": "6", "９": "9", "×": "x", "♀": "",
     "Ⅰ": "I", "Ⅱ": "II", "Ⅲ": "III", "Ⅳ": "IV",
