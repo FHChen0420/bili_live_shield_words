@@ -227,8 +227,8 @@ rules = {
     "(?i)([习習].*?)(a)(pp)": lambda x: x.group(1)+letter[x.group(2)]+x.group(3),
     "(?i)([六6⑥]|l ?i ?u)(.*?)([四肆4④]|s ?i)": lambda x: (x.group(1)+fill(x.group(2),4)+x.group(3)) if x.group(1)+x.group(3)!="64" else x.group(),
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
-    "(?i)[加+](?: ?[^\s微薇v]){0,5})(?= ?[微薇v].*?\w)": lambda x: fill(x.group(),7),
-    "微(?: ?[^\s信]){0,5})(?= ?信.*?\w)": lambda x: fill(x.group(),7),
+    "(?i)[加+](?: ?[^\s微薇v]){0,5}(?= ?[微薇v].*?\w)": lambda x: fill(x.group(),7),
+    "微(?: ?[^\s信]){0,5}(?= ?信.*?\w)": lambda x: fill(x.group(),7),
     ### 保护型处理规则
     "[习習]": lambda x: x.group()+sp,
     "(?i)r(?= ?i.*?[你我他她它].*?[妈吗马嘛母m])": lambda x: letter[x.group()],
@@ -237,7 +237,7 @@ rules = {
     
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格（太乱了，啥时候整理一下）
     "尼嚎": "你好", "人妖": "人Yao", "咖喱 ?人": "咖喱Ren", "全 ?家 ?炸": "全 家Zha", "糖尿病": "糖尿bing", "神经质": "神经 质",
-    "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp, "(?<![小文])丑":"chou", "(?<!愚)蠢(?!蠢?欲动)":"chun"
+    "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp, "(?<![小文])丑":"chou", "(?<!愚)蠢(?!蠢?欲动)":"chun",
     
     "母韵": insert_space, "太笨": insert_space, "全家": insert_space, "变态": insert_space, "彩笔": insert_space, 
     "狒狒": insert_space, "闭嘴": insert_space, "双亲": insert_space, "渣女": insert_space, "股间": insert_space, 
