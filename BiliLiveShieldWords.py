@@ -260,7 +260,7 @@ rules = {
     "%s爹妈%s"%(f1,f2): insert_space, "%s笨笨%s"%(f1,f2): insert_space, "%s孤勇者%s"%(f1,f2): insert_space,
     "%s吃的吗%s"%(f1,f2): insert_space, "%s断[手脖]%s"%(f1,f2): insert_space, "%s作[文者啊吧吗么]%s"%(f1,f2): insert_space,
     
-    "真(?=[^\s不]{0,3}[傻笨蠢病疯丑矮])": add_sapce,
+    "真(?=[^\s不]{0,3}[傻笨蠢病疯丑矮])": add_space,
     "[嘴脸鼻眼脑舌](?=[^\s\d]{0,6}?[胖矮丑烦笨傻蠢怪臭土大睁垃混])": add_space,
     "[你您他她这那个](?=[^\s\d个]{0,3}?[脸嘴鼻脑舌货猴胖矮丑烦笨傻蠢怪臭土歪睁垃混])": add_space,
     "[你您他这那](?=.*?位.*?要求)": add_space,
