@@ -234,7 +234,7 @@ rules = {
     "(?i)([%s] ?|f ?a? ?)([%s会能弄]|l ?u ?n)"%(hz_fa,hz_lun): lambda x: x.group(1)+sp+x.group(2),
     "(?i)[加+](?: ?[^\s微薇v]){0,5}(?= ?[微薇v].*?\w)": lambda x: fill(x.group(),7),
     "微(?: ?[^\s信]){0,5}(?= ?信.*?\w)": lambda x: fill(x.group(),7),
-    "(?i)[卖读渎犊督竺°]|d ?u(?=.*?娘)": lambda x: "売" if x.group()=="卖" else "d%su"%sp,
+    "(?i)([卖读渎犊督竺°]|d ?u)(?=.*?娘)": lambda x: "売" if x.group(1)=="卖" else "d%su"%sp,
     "金(?=[ %s]*[三四])"%p_marks: lambda x: x.group()+sp,
     "工(?=[ %s]*期)"%p_marks: lambda x: x.group()+sp,
     "巨(?=[ %sa-zA-Z]*婴)"%p_marks: lambda x: x.group()+"1",
