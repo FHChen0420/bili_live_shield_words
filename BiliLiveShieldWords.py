@@ -247,7 +247,7 @@ rules = {
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格（太乱了，啥时候整理一下）
     "尼嚎": "你好", "人妖": "人Yao", "咖喱 ?人": "咖喱Ren", "全 ?家 ?炸": "全 家Zha", "糖尿病": "糖尿bing", "神经质": "神经 质",
     "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp, "(?<![小文])丑":"chou", "(?<!愚)蠢(?!蠢?欲动)":"chun",
-    "(?=[笨傻菜])[逼Bb]": "Ⲃ",
+    "(?<=[笨傻菜])[逼Bb]": "Ⲃ",
     
     "母韵": insert_space, "太笨": insert_space, "全家": insert_space, "变态": insert_space, "彩笔": insert_space, 
     "狒狒": insert_space, "闭嘴": insert_space, "双亲": insert_space, "渣女": insert_space, "股间": insert_space, 
