@@ -247,6 +247,7 @@ rules = {
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格（太乱了，啥时候整理一下）
     "尼嚎": "你好", "人妖": "人Yao", "咖喱 ?人": "咖喱Ren", "全 ?家 ?炸": "全 家Zha", "糖尿病": "糖尿bing", "神经质": "神经 质",
     "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp, "(?<![小文])丑":"chou", "(?<!愚)蠢(?!蠢?欲动)":"chun",
+    "(?=[笨傻菜])[逼Bb]": "Ⲃ",
     
     "母韵": insert_space, "太笨": insert_space, "全家": insert_space, "变态": insert_space, "彩笔": insert_space, 
     "狒狒": insert_space, "闭嘴": insert_space, "双亲": insert_space, "渣女": insert_space, "股间": insert_space, 
@@ -260,7 +261,7 @@ rules = {
     "%s爹妈%s"%(f1,f2): insert_space, "%s笨笨%s"%(f1,f2): insert_space, "%s孤勇者%s"%(f1,f2): insert_space,
     "%s吃的吗%s"%(f1,f2): insert_space, "%s断[手脖]%s"%(f1,f2): insert_space, "%s作[文者啊吧吗么]%s"%(f1,f2): insert_space,
     
-    "真(?=[^\s不]{0,3}[傻笨蠢病疯丑矮])": add_space,
+    "真(?=[^\s不]{0,3}[傻笨蠢病疯丑矮菜])": add_space,
     "[嘴脸鼻眼脑舌](?=[^\s\d]{0,6}?[胖矮丑烦笨傻蠢怪臭土大睁垃混])": add_space,
     "[你您他她这那个](?=[^\s\d个]{0,3}?[脸嘴鼻脑舌货猴胖矮丑烦笨傻蠢怪臭土歪睁垃混])": add_space,
     "[你您他这那](?=.*?位.*?要求)": add_space,
@@ -284,8 +285,9 @@ rules = {
     "好多(?=[^\s\d]?猴)": add_space, 
     "死(?=\S?[心狗吧吗嘛啊呢哦么宅])": add_space,
     "[病笨傻蠢](?=[^\s\d]{0,2}[样人吧吗嘛啊呢哦么了])": add_space,
-    "[胖矮](?=\S{0,3}?样)"
-    "[笨傻](?=.{0,2}[逼比笔币Bb])": lambda x: x.group()+" 1",
+    "[胖矮](?=\S{0,3}?样)": add_space,
+    "[笨傻](?=.{0,2}[逼比笔币Bb])": add_space,
+    "%s菜(?=[%sa-zA-Z]*[比笔币逼])"%(f1,p_marks): add_space,
     "[猪狗](?=\S{0,2}种)": lambda x: x.group()+" / ",
     "[一条](?=[^\s\d条]{0,2}狗)": add_space,
     "雑(?! )": add_space,
@@ -294,7 +296,6 @@ rules = {
     "(?i)(g[%s]) ?(c)"%(p_marks): lambda x: x.group(1)+" "+sp+x.group(2),
     "呕(?=呕)": "呕 ",
     "(恶[^\s心]?)心": lambda x: " "+x.group(1)+"xin",
-    # "吗[？?]?(?![\s\d\u4E00-\u9FA5])": "吗？", # 保护性处理（试行）
     "点\S?(?=胖)": add_space,
 }
 
