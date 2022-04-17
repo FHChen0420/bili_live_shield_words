@@ -88,7 +88,7 @@ words =  [
 
     "gc", "hw", "hk", "qd", "rh", "zf",
     "abs", "cjp", "cnm", "gay", "ghs", "kui", "lsp", "nmb", "nmd", "ntr", "ply", "roc", "scp", "soe", "tmd", "usl", "wic", "wjb", "xxd",
-    "anal", "arms", "boki", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
+    "anal", "arms", "dang", "drug", "frog", "fuck", "knee", "kuma", "liya", "loli", "nmsl", "rori", "sina", "tank", "yuan",
     "anmen", "baidu", "bajiu", "bitch", "ching", "elder", "luoli", "obama", "ruler", "sager", "secom", "shina",
     "antifa", "father", "hentai", "huanqi", "panzer", "reddit", "signal", "tiktok", "twitch",
     "excited", "youtube", "exciting", "onedrive", "zhongguo", "revolution", "neverforget",
@@ -131,7 +131,7 @@ words =  [
     "文#6古#6花", "看#6地#6方", "不#6钱#6[啊3]", "[谢x]#6s#6w",
     "找#1工#1作#3加", "准#1备#3纸#1巾", "都#1是#3衣#1服", "那#1个#4奶#1奶", "羊#1羊#4结#1婚", "学#1生#4学#1生", "妈#1妈#6唱#1歌", "不#1论#6生#1死", "[姐妹哥]#1[姐妹哥]#6大#1腿",
     "[01]#2还#1是#2[01]", "你#3画#3我#3猜", "闭#3关#3锁#3国", "不#3穿#3衣#3服", "清#6透#6世#6界", "一#6个#6人#6寂#6寞", "不#1要#6这#1种#1事#1情",
-    "[.]#6c#6c", "[.]#1g#1a", "a#6j#6p", "s#2e#2x", "t#6l#6y", "v#4b#3o", "v#2p#2n", "x#4j#4p", "x#6y#6z", "a#3s#3m#3r", "f#6l#6d#6f", "n#2t#1o#1p", "r#64#60#63",
+    "[.]#6c#6c", "[.]#1g#1a", "a#6j#6p", "s#2e#2x", "t#6l#6y", "v#4b#3o", "v#2p#2n", "x#4j#4p", "x#6y#6z", "a#3s#3m#3r", "b#1o#3k#1i", "f#6l#6d#6f", "n#2t#1o#1p", "r#64#60#63",
     "n#2t#2t#1o#1p", "r#6i#6o#6t#6s", "w#4e#4i#4b#4o", "t#6m#6m#6s#6m#6e", "y#4a#4y#4e#4a#4e", "7#1[.]#15", "1#1[.]#12#13", "9#6m#6k", "1#32#33#34#35#36#37#38#39#30",
     
     "吉#1[尔儿]", "野#1[爹妈]", "射#1[爆爽]", "暴#1[饮食]", "就#1[职職]", "腐#1[败敗]", "称#1[王皇帝]", "微#1[博搏勃]", "奶#1[头汁水]", "想#1[日草艹曰射]",
@@ -284,6 +284,7 @@ rules = {
     "[日草艹操干曰死烧解透跳杀](?=.*?[你尼我他她它].*?[妈马吗码蚂玛犸嘛母m家])": add_space,
     "[你您他她男女人]们?[^\s人]?(?=[^\s\d]?(?:多.*?话|话.*?多|话%s))"%(f2): add_space,
     "好多(?=[^\s\d]?猴)": add_space, 
+    "你们?(?=[^\s\d吓笑]{0,6}死)": add_space,
     "死(?=\S?[心狗吧吗嘛啊呢哦么宅])": add_space,
     "[病笨傻蠢](?=[^\s\d]{0,2}[样人吧吗嘛啊呢哦么了])": add_space,
     "[胖矮](?=\S{0,3}?样)": add_space,
