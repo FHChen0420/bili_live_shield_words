@@ -250,7 +250,7 @@ rules = {
     
     ### 2.0版本屏蔽字，填充机制不适用，一般需要加空格
     "尼嚎": "你好", "人妖": "人yao", "咖喱 ?人": "咖喱ren", "神经质": "神经 质",
-    "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp, "(?<![小文])丑":"chou", "(?<!愚)蠢(?!蠢?欲动)":"chun",
+    "牲畜": "牲%s 畜"%sp, "快死": "快%s 死"%sp, "坦克": "坦%s 克"%sp,
     "(?<=[笨傻菜])[逼Bb]": "Ⲃ", "变态":"変态", "臭小鬼": "臭小鬼",
     "%s死(?![\s2-79%s])"%(f1,cn): "si",
     "恶(?=\S?[心啊吧吗嘛么])": "悪",
@@ -258,20 +258,20 @@ rules = {
     
 }
 
-insert_space_list1=[
+list_1=[
     "母韵", "全家", "彩笔", "柴犬", "狒狒", "闭嘴", "双亲", "渣女", "股间", "大舌",
-    "矮子", "小偷", "愚蠢", "脑子", "大妈", "好吵", "长得", "肥仔", "崽子", "整容", 
+    "矮子", "脑子", "大妈", "好吵", "长得", "肥仔", "崽子", "整容", 
     "脏话", "男妖", "老太婆", "脏东西",
     "难[看听]", "滚[滚开]", "垃圾(?!游戏)",
 ]
 
-insert_space_list2=[
-    "猩猩", "村人", "爹妈", "废柴", "肥宅", 
+list_2=[
+    "村人", "爹妈", "废柴", "肥宅", 
     "孤勇者", "断[手脖]", "作[文者啊吧吗么]", "呕吐?",
 ]
 
-add_space_list=[
-    "(?<!\s)狗(?!狗)", "(?<!\s)雑", "(?<![\s繁])琐",
+list_3=[
+    "(?<!\s)狗(?!狗)", "(?<!\s)雑", "(?<![\s繁])琐", "(?<!愚)蠢(?![蠢货])", "(?<![小文])丑",
     "[日草艹操干曰死烧解透跳杀](?=.*?[你您尼我他她它].*?[妈马吗码蚂玛犸嘛母m家])",
     "[嘴脸鼻眼脑舌肚](?=[^\s\d]{0,6}?[胖矮丑烦笨傻蠢怪废臭土大睁垃混脏])",
     "[你您他她这那][个们么样种些]?(?=\S{0,3}?[脸嘴鼻脑舌肚货猴胖矮丑烦笨傻蠢怪臭土歪睁垃混废脏丫Pp])",
@@ -304,26 +304,23 @@ ex_rules={
     "臭": "臭", "恶": "悪", "滚": "gun", "妖": "yao", "傻": "sha", "狗 ?": "gou", "脑 ?":"nαo", "垃 ?":"la", "圾":"ji",
     "病": "Ⲃing", "蠢": "chun", "丑": "chou", "死": f"s{sp}i", "炸": "zha", "呕": "ou", "逼": "Ⲃi", "猥": "wei", "琐 ?":"suo",
     "(?<![\s吗嘛啊吧呢哦呀])[吗嘛啊吧呢哦呀]": lambda x: " "+x.group(),
-    "东西": "东 西",
+    "东西": insert_space,
 }
 
-add_space_string_ex="猴猪猩"+"嘴脸鼻眼舌肚"+"胖矮烦笨怪废睁混脏菜残"+"跟"
+str_ex="猴猪猩"+"嘴脸鼻眼舌肚"+"胖矮烦笨怪废睁混脏菜残"+"跟"
 
-add_space_list_ex=[
-    "[你您他她它]们?",
+list_4=[
     "[这那][么样种些个是]?",
     "(?<![这那\s])[个样]",
+    "[你您他她它]们?(?![这那])",
 ]
 
-for word in insert_space_list1:
-    rules[word]=insert_space
-for word in insert_space_list2:
-    rules[f1+word+f2]=insert_space
-for word in add_space_list:
-    rules[word]=add_space
-for char in add_space_string_ex:
-    ex_rules[char]=char+" "
-for word in add_space_list_ex:
-    ex_rules[word]=add_space
+for word in list_1:     rules[word]=add_space
+for word in list_2:     rules[f1+word+f2]=add_space
+for word in list_3:     rules[word]=add_space
+for char in str_ex:     ex_rules[char+" ?"]=add_space
+for word in list_4:     ex_rules[word+" ?"]=add_space
+for word in list_1:     ex_rules[word]=insert_space
+for word in list_2:     ex_rules[word]=insert_space
 
 # <DATA END>
