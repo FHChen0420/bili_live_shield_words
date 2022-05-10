@@ -9,13 +9,14 @@ class BiliLiveAntiShield:
         
         :param: rules 正则处理字典[正则匹配串:正则捕获处理函数/字符串]（用于处理较复杂规则）
         :param: words 屏蔽词列表（用于处理较简单规则）
-        :param: filler 用于填充屏蔽词的单字符，默认为U+E0020'''
+        :param: filler 用于填充屏蔽词的单字符，默认为U+E0020（推荐）'''
         self.__filler=filler
         self.__single_fill=lambda x: x.group()[0]+self.__filler+x.group()[1:]
         self.__multi_fill=tuple([lambda x,i=i: x.group(1)+self.__fill(x.group(2),i) for i in range(10)])
         self.__deal_list:List[Tuple[Pattern,Replace]]=[]
         for pat,rep in rules.items():
-            self.__deal_list.append((re.compile(pat),rep))
+            try: self.__deal_list.append((re.compile(pat),rep))
+            except: continue
         for word in words:
             self.__generate_rule(word)
 
@@ -53,33 +54,27 @@ class BiliLiveAntiShield:
     def deal(self,string:str) -> str:
         '''对字符串string进行反屏蔽处理'''
         for i in self.__deal_list:
-            try: 
-                string = i[0].sub(i[1],string)
-            except:
-                print("【Regex Error】 %s"%(i[0].pattern))
-                continue
+            string = i[0].sub(i[1],string)
         return string
     
 if __name__ == '__main__':
     # 导入数据
-    from BiliLiveShieldWords import *
+    from BiliLiveShieldWords import rules,words
     # 创建对象
-    anti_shield=BiliLiveAntiShield(rules,words,"`")
+    shield=BiliLiveAntiShield(rules,words,"`")
     # 进行预设文本测试
     texts=[
-        "asmr",
-        "花瓣纷扬 我们连呼吸也不禁遗忘",
-        "colorful and free",
-        "Oh baby, can't you see?",
-        "流芳百世",
-        "【Melt 马上就要到车站了】",
+        "asmr 奥数魔刃",
+        "Melt 马上就要到车站了。",
         "picopico 东京",
-        "bilibili bilili",
+        "今天nano进门就看到",
+        "你的侧脸有点怪",
+        "花菜比猪肉便宜",
     ]
     for text in texts:
         print("[处理前] "+text)
-        print("[处理后] "+anti_shield.deal(text))
+        print("[处理后] "+shield.deal(text))
     # 进行自定义文本测试
     while True:
         string=input("[处理前] ")
-        print("[处理后] "+anti_shield.deal(string))
+        print("[处理后] "+shield.deal(string))
